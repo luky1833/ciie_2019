@@ -1,0 +1,74 @@
+<div class="tab-pane active">
+    <div class="portlet light bordered">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-circle-o-notc"></i>账号列表
+            </div>
+        </div>
+        <div class="portlet-body">
+            <button class="btn btn-primary" style="margin-bottom: 30px" id="set">新建角色</button>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>角色ID</th>
+                    <th>创建时间</th>
+                    <th>角色名称</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="accountNumberMangerBody">
+                <tr>
+                    <td colspan="4" style="text-align: center;">加载中 <img
+                            src=${static_url("local/img/input-spinner.gif")}></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="sign-box">
+    <div class="sign-detail">
+        <div class="sign-con">
+            <h3>新建角色</h3>
+            <label><span>角色名称：</span><input id="mobile_phone" placeholder="请输入角色名"></label><br>admin/Power/Ro       leManger.mako
+            <label><span>为此角色设置权限：</span></label><br>
+            <div class="content_wrap">
+                <div class="zTreeDemoBackground left">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </div>
+            <div class="sub-but"><input type="button" id="set_role_power" value="确定"> <input class="box-abolish"
+                                                                                             type="button" value="取消"
+                                                                                             name="button"></div>
+        </div>
+    </div>
+</div>
+
+<div class="sign-box2">
+    <div class="sign-detail2">
+        <div class="sign-con">
+            <h3>修改权限</h3>
+            <label><span>为此角色设置权限：</span></label><br>
+            <div class="content_wrap">
+                <div class="zTreeDemoBackground left">
+                    <ul id="treeHaving" class="ztree"></ul>
+                </div>
+            </div>
+            <div class="sub-but"><input type="button" id="modified_role_power" value="保存"> <input class="box-abolish"
+                                                                                                  type="button"
+                                                                                                  value="取消"
+                                                                                                  name="button"></div>
+        </div>
+    </div>
+</div>
+<div class="sign-box3">
+    <div class="sign-detail3">
+        <div class="sign-con">
+            <h3>友情提示：</h3>
+            <p style="margin-left: 120px;margin-top: 40px;font-size: 16px">确认删除此角色吗？</p><br>
+            <div class="sub-but"><input type="button" id="del_role_power" value="确定"> <input class="box-abolish"
+                                                                                             type="button" value="取消"
+                                                                                             name="button"></div>
+        </div>
+    </div>
+</div>
