@@ -6,6 +6,7 @@ import pymysql
 # 打开数据库连接
 class MysqlClass(BaseException):
     def get_drop_list_data(self, *args):
+        batch = args[0]
         connect = pymysql.Connect(
             host='47.103.66.5',
             port=33890,
@@ -19,7 +20,10 @@ class MysqlClass(BaseException):
             data_list = []
             cursor = connect.cursor()
             # SQL 更新语句
-            sql_select = "SELECT * FROM drop_list_data;"
+            if batch != '':
+                sql_select = "SELECT * FROM drop_list_data where drop_list_data.batch = {};".format(batch)
+            else:
+                sql_select = "SELECT * FROM drop_list_data;"
             cursor.execute(sql_select)
             for i in cursor.fetchall():
                 data_list.append({

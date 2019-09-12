@@ -4,6 +4,9 @@ import json
 from mysql_update_vm_task import MysqlClass
 
 app = Flask(__name__)
+from flask_cors import CORS
+
+CORS(app, supports_credentials=True)
 
 
 @app.route('/')
@@ -23,14 +26,14 @@ def demo():
 
 @app.route('/get_drop_list_data', methods=['GET'])
 def get_drop_list_data():
-    uuid = request.args.get('uuid', '')
+    batch = request.args.get('batch', '')
     _ret = {
         'code': 200,
         'message': '获取成功',
         'data': {}
     }
 
-    result = MysqlClass().get_drop_list_data(uuid)
+    result = MysqlClass().get_drop_list_data(batch)
 
     if result[0] == 200:
         _ret['data'] = result[1]
