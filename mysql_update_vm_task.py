@@ -5,7 +5,7 @@ import pymysql
 
 # 打开数据库连接
 class MysqlClass(BaseException):
-    def mysql_update(self, *args):
+    def get_drop_list_data(self, *args):
         connect = pymysql.Connect(
             host='47.103.66.5',
             port=33890,
@@ -23,12 +23,13 @@ class MysqlClass(BaseException):
             cursor.execute(sql_select)
             for i in cursor.fetchall():
                 data_list.append({
-                    'name': i[1],
+                    'id': i[0],
+                    'drop_name': i[1],
                     'batch': i[2],
                     'site': i[3],
                     'color': i[4],
                     'state': i[5],
-                    'bounced_content': i[6],
+                    'bounced_content': i[6]
                 })
             connect.commit()
             connect.close()
@@ -37,25 +38,38 @@ class MysqlClass(BaseException):
             connect.rollback()
             connect.close()
 
-    # # 根据克隆虚拟机任务返回结果,操作数据库修改任务状态结果
-    # def mysql_update_res_vm(self, *args):
-    #     vm_id = args[0]
-    #     state = args[1]
-    #     ems_ref = args[2]
-    #     new_vm_uuid = args[3]
-    #     if str(ems_ref) != '':
-    #         ems_ref = str(ems_ref).split(':')[1].split("'")[0]
-    #     db = pymysql.connect("31.16.10.29", "root", "ECDATA_q1w2e3r4", "cmp-v2", charset='utf8')
-    #     cursor = db.cursor()
-    #     sql = "UPDATE res_vm SET state = '{}',ems_ref = '{}',uuid='{}' WHERE res_vm.id = '{}'".format(state, ems_ref,
-    #                                                                                                   new_vm_uuid,
-    #                                                                                                   vm_id)
-    #     try:
-    #         # 执行SQL语句
-    #         cursor.execute(sql)
-    #         db.commit()
-    #         # 提交到数据库执行
-    #     except:
-    #         # 发生错误时回滚
-    #         db.rollback()
-    #     db.close()
+    # 更新数据库数据
+    def mysql_update_drop_data(self, *args):
+        id = args[0]
+        drop_name = args[1]
+        batch = args[2]
+        site = args[3]
+        color = args[4]
+        state = args[5]
+        bounced_content = args[6]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        cursor = connect.cursor()
+        sql = "UPDATE drop_list_data SET drop_name = '{}',batch = '{}',site='{}',color='{}',state='{}'," \
+              "bounced_content='{}' WHERE drop_list_data.id = {}".format(
+            drop_name, batch, site,
+            color, state, bounced_content,
+            id)
+        try:
+            # 执行SQL语句
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '修改成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+        connect.close()

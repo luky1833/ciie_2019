@@ -11,7 +11,8 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/love', methods=['GET', 'POST', 'PUT'])
+@app.route('/'
+           '', methods=['GET', 'POST', 'PUT'])
 def demo():
     data = dict()
     data['menu'] = 'manager'
@@ -29,7 +30,33 @@ def get_drop_list_data():
         'data': {}
     }
 
-    result = MysqlClass().mysql_update(uuid)
+    result = MysqlClass().get_drop_list_data(uuid)
+
+    if result[0] == 200:
+        _ret['data'] = result[1]
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['message'] = result[1]
+        return json.dumps(_ret)
+
+
+@app.route('/mysql_update_drop_data', methods=['GET'])
+def update_drop_data():
+    id = request.args.get('id', 1)
+    drop_name = request.args.get('drop_name', 'demo55')
+    batch = request.args.get('batch', '1')
+    site = request.args.get('site', '20,56')
+    color = request.args.get('color', 'blue')
+    state = request.args.get('state', '2')
+    bounced_content = request.args.get('bounced_content', '测试2')
+
+    _ret = {
+        'code': 200,
+        'message': '修改成功',
+        'data': {}
+    }
+    result = MysqlClass().mysql_update_drop_data(id, drop_name, batch, site, color, state, bounced_content)
 
     if result[0] == 200:
         _ret['data'] = result[1]
