@@ -33,7 +33,8 @@ class MysqlClass(BaseException):
                     'site': i[3],
                     'color': i[4],
                     'state': i[5],
-                    'bounced_content': i[6]
+                    'bounced_content': i[6],
+                    'alert': i[7]
                 })
             connect.commit()
             connect.close()
@@ -41,6 +42,7 @@ class MysqlClass(BaseException):
         except:
             connect.rollback()
             connect.close()
+            return 500, '获取失败'
 
     # 更新数据库数据
     def mysql_update_drop_data(self, *args):
@@ -51,6 +53,7 @@ class MysqlClass(BaseException):
         color = args[4]
         state = args[5]
         bounced_content = args[6]
+        alert = args[7]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -63,12 +66,13 @@ class MysqlClass(BaseException):
 
         cursor = connect.cursor()
         sql = "UPDATE drop_list_data SET drop_name = '{}',batch = '{}',site='{}',color='{}',state='{}'," \
-              "bounced_content='{}' WHERE drop_list_data.id = {}".format(
+              "bounced_content='{}',alert='{}' WHERE drop_list_data.id = {}".format(
             drop_name, batch, site,
-            color, state, bounced_content,
+            color, state, bounced_content, alert,
             id)
         try:
             # 执行SQL语句
+            print(sql)
             cursor.execute(sql)
             connect.commit()
             return 200, '修改成功'
@@ -76,4 +80,5 @@ class MysqlClass(BaseException):
         except:
             # 发生错误时回滚
             connect.rollback()
-        connect.close()
+            connect.close()
+            return 500, '修改失败'

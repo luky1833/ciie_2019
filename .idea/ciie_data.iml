@@ -4,19 +4,24 @@
     <option name="enabled" value="true" />
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/venv" />
-    </content>
+    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/.idea" />
+    <content url="file://$MODULE_DIR$/static" />
+    <content url="file://$MODULE_DIR$/static/css" />
+    <content url="file://$MODULE_DIR$/static/images" />
+    <content url="file://$MODULE_DIR$/static/js" />
+    <content url="file://$MODULE_DIR$/static/plugins" />
+    <content url="file://$MODULE_DIR$/templates" />
+    <content url="file://$MODULE_DIR$/templates/auth" />
+    <content url="file://$MODULE_DIR$/templates/errors" />
+    <content url="file://$MODULE_DIR$/venv" />
+    <content url="file://$MODULE_DIR$/venv/Lib" />
+    <content url="file://$MODULE_DIR$/venv/Scripts" />
     <orderEntry type="jdk" jdkName="Python 3.6" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
-    <option name="TEMPLATE_FOLDERS">
-      <list>
-        <option value="$MODULE_DIR$/../ciie_data\templates" />
-      </list>
-    </option>
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

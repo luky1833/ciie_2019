@@ -1,4 +1,4 @@
-<%inherit file="layout.mako"/>
+<%inherit file="base.html"/>
 <%block name="content">
     <div class="tab-pane active">
         <div class="portlet light bordered">
