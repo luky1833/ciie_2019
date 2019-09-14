@@ -4,6 +4,7 @@
 {% block navbar %}
     <section class="content-header">
         <h1>点位管理控制</h1>
+        <a style="margin-top: 20px;margin-left: 10px" class='fa fa-lg fa-credit-card text-green' onclick="">添加</a>
         <ol class="breadcrumb">
             <li><i class="fa fa-dashboard"></i> 当前位置</li>
             <li class="active">点位管理</li>
@@ -39,23 +40,49 @@
                             <td>{{ row.state }}</td>
                             <td>{{ row.bounced_content }}</td>
                             <td>{{ row.alert }}</td>
-                            <td><a class='fa fa-lg fa-edit text-light-blue'
-                                   href=''></a></td>
-                            <td><a class='fa fa-lg fa-warning text-red' onclick="Delete({{ row.id }})"></a></td>
+                            <td><a class='fa fa-lg fa-edit text-blue' onclick="Update({{ row.id }})"></a></td>
+                            <td><a class='fa fa-lg fa-remove text-red' onclick="Delete({{ row.id }})"></a></td>
                         </tr>
                     {% endfor %}
                 </table>
             {% endif %}
         </div>
     </div>
+
+
 {% endblock %}
 
 {% block scripts %}
     <script>
         function Delete(id) {
-            alert(id);
+            var r = confirm("确认删除第" + id + "条数据");
+            if (r == true) {
+                $.get("/mysql_delete_drop_data", function () {
+                        window.location.reload()
+                    }
+                );
+            } else {
+
+            }
         }
 
+        function Update(id) {
+            {#alert(id);#}
+            var value = prompt('输入你的名字：', '默认名字');
+            if (value == null) {
+                alert('你取消了输入！');
+            } else if (value == '') {
+                alert('姓名输入为空，请重新输入！');
+                show_prompt();
+            } else {
+                alert('你好，' + value);
+            }
+            {#$('.sign-box').fadeIn(222);#}
+            {#$('.sign-detail').fadeIn(222);#}
+
+            var txt = "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
+            window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm);
+        }
 
     </script>
 {% endblock %}

@@ -74,17 +74,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% block scripts %}
-<script>
-    function initPage() {
-        var jsInObj = null;
-        restTemplate("GET", "/stats/summary", jsInObj, function (jsOutObj) {
-            $("#count01").text(jsOutObj.batch_count);
-            $("#count02").text(jsOutObj.test_count);
-            $("#count03").text(jsOutObj.succ_count);
-            $("#count04").text(jsOutObj.fail_count);
-        });
-    }
-</script>
-{% endblock %}

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import pymysql
+import json
 
 
 # 打开数据库连接
@@ -34,7 +35,8 @@ class MysqlClass(BaseException):
                     'color': i[4],
                     'state': i[5],
                     'bounced_content': i[6],
-                    'alert': i[7]
+                    'alert': i[7],
+                    'drop_radiation_speed': i[8]
                 })
             connect.commit()
             connect.close()
@@ -47,13 +49,10 @@ class MysqlClass(BaseException):
     # 更新数据库数据
     def mysql_update_drop_data(self, *args):
         id = args[0]
-        drop_name = args[1]
-        batch = args[2]
-        site = args[3]
-        color = args[4]
-        state = args[5]
-        bounced_content = args[6]
-        alert = args[7]
+        site = args[1]
+        color = args[2]
+        batch = args[3]
+        drop_radiation_speed = args[4]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -65,11 +64,8 @@ class MysqlClass(BaseException):
         )
 
         cursor = connect.cursor()
-        sql = "UPDATE drop_list_data SET drop_name = '{}',batch = '{}',site='{}',color='{}',state='{}'," \
-              "bounced_content='{}',alert='{}' WHERE drop_list_data.id = {}".format(
-            drop_name, batch, site,
-            color, state, bounced_content, alert,
-            id)
+        sql = "UPDATE drop_list_data SET site = '{}',color = '{}',batch='{}',drop_radiation_speed='{}'" \
+              "WHERE drop_list_data.id = {}".format(site, color, batch, drop_radiation_speed, id)
         try:
             # 执行SQL语句
             print(sql)
@@ -89,9 +85,7 @@ class MysqlClass(BaseException):
         batch = args[1]
         site = args[2]
         color = args[3]
-        state = args[4]
-        bounced_content = args[5]
-        alert = args[6]
+        drop_radiation_speed = args[4]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -103,9 +97,8 @@ class MysqlClass(BaseException):
         )
 
         cursor = connect.cursor()
-        sql = "INSERT INTO drop_list_data (drop_name,batch,site,color,state,bounced_content,alert) " \
-              "VALUES ('{}', '{}','{}','{}','{}','{}','{}')".format(drop_name, batch, site, color, state,
-                                                                    bounced_content, alert)
+        sql = "INSERT INTO drop_list_data (drop_name,batch,site,color,drop_radiation_speed) " \
+              "VALUES ('{}', '{}','{}','{}','{}')".format(drop_name, batch, site, color, drop_radiation_speed)
         try:
             # 执行SQL语句
             print(sql)
@@ -146,3 +139,59 @@ class MysqlClass(BaseException):
             connect.rollback()
             connect.close()
             return 500, '删除失败'
+
+    def get_all_data(self):
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+        try:
+            # 使用cursor()方法获取操作游标
+            cursor = connect.cursor()
+            # SQL 更新语句
+            sql_select = "SELECT * FROM all_drop_data;"
+            cursor.execute(sql_select)
+            result = cursor.fetchall()[0]
+            data = {
+                'all_batch_num': result[0],
+                'all_batch_speed': result[1]
+            }
+            connect.close()
+            return 200, data
+        except:
+            connect.rollback()
+            connect.close()
+            return 500, '获取失败'
+
+    def edit_all_data(self, *args):
+        all_batch_num = args[0]
+        all_batch_speed = args[1]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        cursor = connect.cursor()
+        sql = "UPDATE all_drop_data SET all_batch_num = '{}',all_batch_speed = '{}'".format(all_batch_num,
+                                                                                            all_batch_speed)
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '修改成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '修改失败'

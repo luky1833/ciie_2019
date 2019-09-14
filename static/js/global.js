@@ -5,7 +5,6 @@ $(function () {
     //初始化共公界面元素
     initPublicElement();
     //初始化界面
-    initPage();
 });
 
 //初始化共公界面元素
