@@ -82,3 +82,67 @@ class MysqlClass(BaseException):
             connect.rollback()
             connect.close()
             return 500, '修改失败'
+
+    # 添加数据库数据
+    def mysql_add_drop_data(self, *args):
+        drop_name = args[0]
+        batch = args[1]
+        site = args[2]
+        color = args[3]
+        state = args[4]
+        bounced_content = args[5]
+        alert = args[6]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        cursor = connect.cursor()
+        sql = "INSERT INTO drop_list_data (drop_name,batch,site,color,state,bounced_content,alert) " \
+              "VALUES ('{}', '{}','{}','{}','{}','{}','{}')".format(drop_name, batch, site, color, state,
+                                                                    bounced_content, alert)
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '添加成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '添加失败'
+
+    # 删除数据库数据
+    def mysql_delete_drop_data(self, *args):
+        id = args[0]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        cursor = connect.cursor()
+        sql = "DELETE FROM drop_list_data WHERE id={};".format(id)
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '删除成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '删除失败'

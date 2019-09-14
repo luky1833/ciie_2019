@@ -19,7 +19,7 @@ def demo():
     return render_template('love.html')
 
 
-@app.route('/ddd', methods=['GET', 'POST', 'PUT'])
+@app.route('/admin', methods=['GET', 'POST', 'PUT'])
 def demo2():
     data = dict()
     data['menu'] = 'manager'
@@ -34,6 +34,7 @@ def demo2():
     return render_template('notifylist.html', data=data)
 
 
+# 获取所有点位数据信息
 @app.route('/get_drop_list_data', methods=['GET'])
 def get_drop_list_data():
     batch = request.args.get('batch', '')
@@ -54,6 +55,7 @@ def get_drop_list_data():
         return json.dumps(_ret)
 
 
+# 更新点位数据信息
 @app.route('/mysql_update_drop_data', methods=['GET'])
 def update_drop_data():
     id = request.args.get('id', 1)
@@ -67,10 +69,58 @@ def update_drop_data():
 
     _ret = {
         'code': 200,
-        'message': '修改成功',
+        'message': '修改点位信息成功',
         'data': {}
     }
     result = MysqlClass().mysql_update_drop_data(id, drop_name, batch, site, color, state, bounced_content, alert)
+
+    if result[0] == 200:
+        _ret['data'] = result[1]
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['message'] = result[1]
+        return json.dumps(_ret)
+
+
+# 添加点位数据信息
+@app.route('/mysql_add_drop_data', methods=['GET'])
+def add_drop_data():
+    drop_name = request.args.get('drop_name', '')
+    batch = request.args.get('batch', 1)
+    site = request.args.get('site', '')
+    color = request.args.get('color', '')
+    state = request.args.get('state', '')
+    bounced_content = request.args.get('bounced_content', '')
+    alert = request.args.get('alert', '')
+
+    _ret = {
+        'code': 200,
+        'message': '添加点位信息成功',
+        'data': {}
+    }
+    result = MysqlClass().mysql_add_drop_data(drop_name, batch, site, color, state, bounced_content, alert)
+
+    if result[0] == 200:
+        _ret['data'] = result[1]
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['message'] = result[1]
+        return json.dumps(_ret)
+
+
+# 添加点位数据信息
+@app.route('/mysql_delete_drop_data', methods=['GET'])
+def delete_drop_data():
+    id = request.args.get('id', '')
+
+    _ret = {
+        'code': 200,
+        'message': '删除点位信息成功',
+        'data': {}
+    }
+    result = MysqlClass().mysql_delete_drop_data(id)
 
     if result[0] == 200:
         _ret['data'] = result[1]
