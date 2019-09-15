@@ -4,13 +4,6 @@
     <list default="true" id="d15bc90b-1f0f-4cf5-ab7f-1cdf2aac82a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/jbh/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/jbh/reset.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/reset.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/jbh/swiper.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/swiper.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jbh/backend.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jbh/backend.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jbh/draw.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jbh/draw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/backend.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/backend.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fronted.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fronted.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="697">
+              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -169,36 +162,6 @@
               <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
               <item name="ciie" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ciie" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ciie" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ciie" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ciie" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ciie" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ciie" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="jbh" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -293,13 +256,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26627000" />
+    <option name="totallyTimeSpent" value="26715000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="67" y="5" width="1124" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1359275" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23966165" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -531,8 +494,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="697">
+          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
