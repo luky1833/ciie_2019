@@ -89,8 +89,8 @@ var drawFunc = {
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
-                        x2:  e.target.position[0]*1+12,
-                        y2: e.target.position[1]*1+22
+                        x1:  e.target.position[0]*1+12,
+                        y1: e.target.position[1]*1+22
                     }
                 })
                 _this.textGroup.childAt(index).attr({
