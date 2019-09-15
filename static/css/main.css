@@ -1,15 +1,16 @@
 .container{
-    width: 1920px;
-    height: 1080px;
+    width: 100%;
+    height: 100vh;
     overflow: scroll;
     background-image: url(../images/jbh/bg.png);
-    background-size: 100% 100%;
+    background-size: 1920px 1080px;
+    background-position: top left;
     position: relative;
 }
 .layerMask{
     position: absolute;
-    width: 1920px;
-    height: 1080px;
+    width: 100%;
+    height: 100%;
     top:0;
     left:0;
     display: none;
@@ -55,7 +56,7 @@
     z-index: 99999;
 }
 .swiper-slide{
-    background-image: url(../images/jbh/worn.png);
+    background-image: url(../images/jbh/worn.PNG);
     background-size: 100% 100%;
     cursor: pointer;
 }

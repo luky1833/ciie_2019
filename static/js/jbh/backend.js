@@ -35,11 +35,11 @@ var drawFunc = {
         var line = this.drawLine({
             x: x,
             y: y
-        })
+        },color)
         var text = new zrender.Text({
             position:[x*1+25,y],
             style:{
-                text:'名称：'+p.drop_name,
+                text:'名称：'+p.drop_name+'\nID：'+p.id,
                 textFill:p.color,
                 fontSize:'16'
             }
@@ -140,17 +140,17 @@ var drawFunc = {
     /** 
      * 绘制动态射线
      * */
-     drawLine:function(points) {
+     drawLine:function(points,color) {
         var line = new zrender.Line({
             style: {
                 lineDash: [10, 10],
-                stroke: 'yellow'
+                stroke: color
             },
             shape: {
-                x1:945+12,
-                y1:410+30,
-                x2: (points.x*1+6),
-                y2: (points.y*1+22)
+                x2:945+12,
+                y2:410+30,
+                x1: (points.x*1+6),
+                y1: (points.y*1+22)
             }
         });
         return line

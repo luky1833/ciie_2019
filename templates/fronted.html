@@ -37,17 +37,24 @@
             })
         }
         getData(1)
-        /*
-        * 轮询查数据
-        */
-    //     var batch = 1
-    //     var timer = setInterval(function(){
-    //         batch++
-    //     getData(batch)
-    //     if(batch>=4){
-    //         batch=0
-    //     }
-    //    },20000)
+        $.ajax({
+           url:domain+'/get_all_data',
+           type:'get',
+           success:function(result){
+                var res = JSON.parse(result)
+                if(res.code=='200'){
+                    var batchNum = res.data.all_batch_num
+                    var batch = 1
+                    var timer = setInterval(function(){
+                        batch++
+                        getData(batch)
+                        if(batch>=batchNum){
+                            batch=0
+                        }
+                    },20000)
+                }
+           }
+       })
     </script>
 </body>
 </html>

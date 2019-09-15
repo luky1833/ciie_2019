@@ -15,10 +15,16 @@
 
 <body>
     <div class="container">
-        <div id="main" style="width:1920px;height:1080px;"></div>
+        <div id="main" style="width:100%;height:100%;"></div>
         <div class="editPart">
             <h5>编辑区</h5>
             <div class="content">
+                <div style="padding: 15px 30px;" class="field">
+                        <span>批次：</span>
+                        <select name="batch">
+                            <option value="0">全部</option>
+                        </select>
+                </div>
                 <div class="btn" id="create">创建坐标点</div>
                 <div class="box" style="display: none;">
                     <div class="field">
@@ -52,7 +58,7 @@
             </div>
         </div>
     </div>
-    <script src="../static/js/jbh/backend.js"></script>
+    <script src="../static/js/jbh/draw.js"></script>
     <script>
         var domain = 'http://47.103.66.5:5000'
         var zr = zrender.init(document.getElementById('main'));
@@ -109,6 +115,38 @@
             }
         })
         })
+
+        $.ajax({
+           url:domain+'/get_all_data',
+           type:'get',
+           success:function(result){
+                var res = JSON.parse(result)
+                if(res.code=='200'){
+                    var batchNum = res.data.all_batch_num
+                    var html = ''
+                    for(var i=1;i<=batchNum;i++){
+                        html += `<option value="${i}">${i}</option>`
+                    }
+                    $('select[name="batch"]').append(html)
+                }
+           }
+       })
+       $('select[name="batch"]').change(function(e){
+           var batch = $('select[name="batch"]').val()!=0?$('select[name="batch"]').val():''
+           $.ajax({
+            url: domain + '/get_drop_list_data?batch='+batch,
+            type: 'get',
+            success: function(result) {
+                $('.layer').hide()
+                var res = JSON.parse(result)
+                if (res.code == '200') {
+                    drawFunc.init(res.data)
+                } else {
+                    alert(res.message)
+                }
+            }
+        })
+       })
     </script>
 </body>
 
