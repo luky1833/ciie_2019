@@ -11,7 +11,12 @@ CORS(app, supports_credentials=True)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return render_template('fronted.html')
+
+
+@app.route('/index', methods=['GET', 'POST', 'PUT'])
+def index():
+    return render_template('fronted.html')
 
 
 @app.route('/love', methods=['GET', 'POST', 'PUT'])
@@ -19,20 +24,12 @@ def love():
     return render_template('love.html')
 
 
-#
-# @app.route('/admin', methods=['GET', 'POST', 'PUT'])
-# def demo2():
-#     data = dict()
-#     data['menu'] = 'manager'
-#     data['submenu'] = 'managerIndex1'
-#     data['power_opts'] = '2323'
-#     result = MysqlClass().get_drop_list_data('')
-#     if result[0] == 200:
-#         data = result[1]
-#     else:
-#         return render_template('errors/500.html')
-#
-#     return render_template('notifylist.html', data=data)
+# 后端设置页面
+@app.route('/admin', methods=['GET', 'POST', 'PUT'])
+def demo2():
+    return render_template('backend.html')
+
+
 #
 
 # 获取所有点位数据信息

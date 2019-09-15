@@ -2,7 +2,7 @@
     width: 1920px;
     height: 1080px;
     overflow: scroll;
-    background-image: url(../images/bg.png);
+    background-image: url(../images/jbh/bg.png);
     background-size: 100% 100%;
     position: relative;
 }
@@ -16,7 +16,7 @@
 }
 .layer{
     position: absolute;
-    background: url(../images/layer.png);
+    background: url(../images/jbh/layer.png);
     width: 250px;
     height: 150px;
     background-size: 100% 100%;
