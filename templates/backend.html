@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.min.js"></script> -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/zrender.min.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="main" style="width:1920px;height:1080px;"></div>
+        <div class="editPart">
+            <h5>编辑区</h5>
+            <div class="content">
+                <div class="btn" id="create">创建坐标点</div>
+                <div class="box" style="display: none;">
+                    <div class="field">
+                        <span class="posi">x: <input type="number" name="x" /></span>
+                        <span class="posi">y: <input type="number" name="y" /></span>
+                    </div>
+                    <div class="field">
+                        <span>名称：</span>
+                        <input type="text" name="drop_name">
+                    </div>
+                    <div class="field">
+                        <span>状态：</span>
+                        <select name="state">
+                            <option value="1">正常</option>
+                            <option value="2">报警</option>
+                            <option value="3">损坏</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <span>轮次：</span>
+                        <input type="number" name="batch">
+                    </div>
+                    <div class="field">
+                        <span>射线速率：</span>
+                        <input type="number" name="speed" style="width: 100px;">
+                    </div>
+                    <input type="hidden" name="id"/>
+                    <div class="btn" id="save">保存</div>
+                    <div class="btn" id="delete" style="display: none;">删除</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/backend.js"></script>
+    <script>
+        var domain = 'http://47.103.66.5:5000'
+        var zr = zrender.init(document.getElementById('main'));
+        $.ajax({
+            url: domain + '/get_drop_list_data',
+            type: 'get',
+            success: function(result) {
+                $('.layer').hide()
+                var res = JSON.parse(result)
+                if (res.code == '200') {
+                    drawFunc.init(res.data)
+                } else {
+                    alert(res.message)
+                }
+            }
+        })
+        $('#save').click(function(){
+            var url = ''
+            
+            var x = $('input[name="x"]').val()
+            var y = $('input[name="y"]').val()
+            var site = [x,y].join(',')
+            var state = $('select[name="state"]').val()
+            var batch = $('input[name="batch"]').val()
+            var speed = $('input[name="speed"]').val()
+            var name = $('input[name="drop_name"]').val()
+            var color = state==1?'green':state==2?'red':'yellow'
+            if($('input[name="id"]').val()){
+                url = domain+'/mysql_update_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color+'&id='+$('input[name="id"]').val()
+            }else{
+                url=domain+'/mysql_add_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color
+            }
+            $.ajax({
+                url:url,
+                success:function(result){
+                    var res = JSON.parse(result)
+                    if(res.code=='200'){
+                        alert('操作成功')
+                        window.location.reload()
+                    }
+                }
+            })
+        })
+        $('#delete').click(function(){
+            var id = $('input[name="id"]').val()
+            $.ajax({
+            url:'http://47.103.66.5:5000/mysql_delete_drop_data?id='+id,
+            success:function(result){
+                var res = JSON.parse(result)
+                if(res.code=='200'){
+                        alert('删除成功')
+                        window.location.reload()
+                    }
+            }
+        })
+        })
+    </script>
+</body>
+
+</html>

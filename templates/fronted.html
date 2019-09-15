@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.min.js"></script> -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/swiper.min.js"></script>
+    <script src="js/zrender.min.js"></script>
+
+    <title></title>
+</head>
+<body>
+    <div class="container">
+        <div id="main" style="width:1920px;height:1080px;"></div>
+    </div>
+    <script src="js/draw.js"></script>
+    <script>
+        var domain = 'http://47.103.66.5:5000'
+        function getData(batch){
+            $.ajax({
+            url:domain+'/get_drop_list_data?batch='+batch,
+            type:'get',
+            success:function(result){
+                    $('.layer').hide()
+                    var res = JSON.parse(result)
+                    if(res.code=='200'){
+                        drawFunc.init(res.data)
+                    }else{
+                        alert(res.message)
+                    }
+                }
+            })
+        }
+        getData(1)
+        /*
+        * 轮询查数据
+        */ 
+    //     var batch = 1
+    //     var timer = setInterval(function(){
+    //         batch++
+    //     getData(batch)
+    //     if(batch>=4){
+    //         batch=0
+    //     }
+    //    },20000)
+    </script>
+</body>
+</html>
