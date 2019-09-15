@@ -8,7 +8,7 @@ var drawFunc = {
     createCenterPoint:function(){
         var point = new zrender.Image({
             style:{
-                image:'images/red.png',
+                image:'../../images/jbh/red.png',
                 x:945,
                 y:410,
                 width:24,
@@ -59,7 +59,7 @@ var drawFunc = {
             position:[x,y],
             scale: [1, 1],
             style:{
-                image:'images/'+color+'.png',
+                image:'../../images/jbh/'+color+'.png',
                 x:0,
                 y:0,
                 width:16,
@@ -69,7 +69,7 @@ var drawFunc = {
                 this.attr({
                     scale: [1.2, 1.2],
                     style:{
-                        image:'images/'+color+'_active.png',
+                        image:'../../images/jbh/'+color+'_active.png',
                     }
                 })
                 _this.textGroup.childAt(index).show()
@@ -78,7 +78,7 @@ var drawFunc = {
                 this.attr({
                     scale: [1, 1],
                     style:{
-                        image:'images/'+color+'.png',
+                        image:'../../images/jbh/'+color+'.png',
                     }
                 })
                 _this.textGroup.childAt(index).hide()
