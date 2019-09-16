@@ -50,8 +50,8 @@
 }
 .swiper-container{
     position: absolute;
-    width: 360px;
-    height: 60px;
+    width: 720px;
+    height: 120px;
     bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
@@ -63,10 +63,12 @@
     cursor: pointer;
 }
 .swiper-slide p{
-    line-height: 60px;
-    font-size: 18px;
-    color: yellow;
-    text-align: center
+    line-height: 1;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+    padding:20px;
+    padding-left: 90px;
 }
 .editPart{
     position: absolute;
