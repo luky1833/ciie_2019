@@ -53,6 +53,7 @@ class MysqlClass(BaseException):
         color = args[2]
         batch = args[3]
         drop_radiation_speed = args[4]
+        state = args[5]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -64,8 +65,8 @@ class MysqlClass(BaseException):
         )
 
         cursor = connect.cursor()
-        sql = "UPDATE drop_list_data SET site = '{}',color = '{}',batch='{}',drop_radiation_speed='{}'" \
-              "WHERE drop_list_data.id = {}".format(site, color, batch, drop_radiation_speed, id)
+        sql = "UPDATE drop_list_data SET site = '{}',color = '{}',batch='{}',drop_radiation_speed='{}',state='{}'" \
+              "WHERE drop_list_data.id = {}".format(site, color, batch, drop_radiation_speed, state, id)
         try:
             # 执行SQL语句
             print(sql)
@@ -86,6 +87,7 @@ class MysqlClass(BaseException):
         site = args[2]
         color = args[3]
         drop_radiation_speed = args[4]
+        state = args[5]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -97,8 +99,9 @@ class MysqlClass(BaseException):
         )
 
         cursor = connect.cursor()
-        sql = "INSERT INTO drop_list_data (drop_name,batch,site,color,drop_radiation_speed) " \
-              "VALUES ('{}', '{}','{}','{}','{}')".format(drop_name, batch, site, color, drop_radiation_speed)
+        sql = "INSERT INTO drop_list_data (drop_name,batch,site,color,drop_radiation_speed,state) " \
+              "VALUES ('{}', '{}','{}','{}','{}','{}')".format(drop_name, batch, site, color, drop_radiation_speed,
+                                                               state)
         try:
             # 执行SQL语句
             print(sql)

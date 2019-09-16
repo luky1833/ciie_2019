@@ -22,29 +22,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>main.index</find>
-      <find>current_user</find>
-      <find>统计</find>
-      <find>form</find>
-      <find>initPage is not defined</find>
-      <find>Dialog</find>
-      <find>initPage</find>
-      <find>performances</find>
-      <find>setting</find>
-      <find>add</find>
-      <find>creat</find>
-      <find>credit</find>
-      <find>drop_rotational_speed</find>
-      <find>sql_select</find>
-      <find>bg</find>
-      <find>images/jbh/red.png</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>drop_radiation_speed</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -134,7 +111,7 @@
       <workItem from="1568343369624" duration="3000" />
       <workItem from="1568343394350" duration="7789000" />
       <workItem from="1568419635422" duration="17486000" />
-      <workItem from="1568601544876" duration="5412000" />
+      <workItem from="1568601544876" duration="6245000" />
     </task>
     <servers />
   </component>

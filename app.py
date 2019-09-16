@@ -67,6 +67,7 @@ def update_drop_data():
     id = request.args.get('id', 1)
     site = request.args.get('site', '')
     color = request.args.get('color', '')
+    state = request.args.get('state', '')
     batch = request.args.get('batch', '')
     drop_radiation_speed = request.args.get('drop_radiation_speed', '')  # 放射线速度
 
@@ -76,7 +77,7 @@ def update_drop_data():
         'data': {}
     }
 
-    result = MysqlClass().mysql_update_drop_data(id, site, color, batch, drop_radiation_speed)
+    result = MysqlClass().mysql_update_drop_data(id, site, color, batch, drop_radiation_speed, state)
 
     if result[0] == 200:
         _ret['data'] = result[1]
@@ -94,6 +95,7 @@ def add_drop_data():
     batch = request.args.get('batch', 1)
     site = request.args.get('site', '')
     color = request.args.get('color', '')
+    state = request.args.get('state', '')
     drop_radiation_speed = request.args.get('drop_radiation_speed', '')
 
     _ret = {
@@ -101,7 +103,7 @@ def add_drop_data():
         'message': '添加点位信息成功',
         'data': {}
     }
-    result = MysqlClass().mysql_add_drop_data(drop_name, batch, site, color, drop_radiation_speed)
+    result = MysqlClass().mysql_add_drop_data(drop_name, batch, site, color, drop_radiation_speed, state)
 
     if result[0] == 200:
         _ret['data'] = result[1]
