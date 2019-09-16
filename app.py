@@ -9,7 +9,6 @@ from flask_cors import CORS
 CORS(app, supports_credentials=True)
 
 
-
 @app.route('/')
 def hello_world():
     return render_template('fronted.html')
@@ -186,7 +185,7 @@ def edit_alert_data():
         'errmsg': ''
     }
 
-    if color == 'red' and alert_data == '':
+    if str(color) == '3' and alert_data == '':
         _ret['code'] = 400
         _ret['status'] = 'failed'
         _ret['errmsg'] = '缺少参数 alert_data'
@@ -241,6 +240,7 @@ def edit_verification_gate():
         _ret['status'] = 'failed'
         _ret['errmsg'] = result[1]
         return json.dumps(_ret)
+
 
 if __name__ == '__main__':
     app.run(

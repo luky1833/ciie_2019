@@ -201,7 +201,7 @@ class MysqlClass(BaseException):
 
     def edit_alert_data(self, *args):
         id = args[0]
-        color = args[1]
+        state = args[1]
         alert_data = args[2]
 
         connect = pymysql.Connect(
@@ -213,12 +213,12 @@ class MysqlClass(BaseException):
             charset='utf8'
         )
 
-        if color == 'red':
-            state = 3
-        elif color == 'green':
-            state = 1
-        elif color == 'yellow':
-            state = 2
+        if str(state) == '3':
+            color = 'red'
+        elif str(state) == '1':
+            state = 'green'
+        elif str(state) == '2':
+            state = 'yellow'
 
         cursor = connect.cursor()
         sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}'" \
