@@ -8,6 +8,14 @@ from flask_cors import CORS
 
 CORS(app, supports_credentials=True)
 
+if __name__ == '__main__':
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        threaded=True,
+        debug=True
+    )
+
 
 @app.route('/')
 def hello_world():
@@ -165,10 +173,76 @@ def edit_all_data():
         return json.dumps(_ret)
 
 
-if __name__ == '__main__':
-    app.run(
-        host='0.0.0.0',
-        port=5000,
-        threaded=True,
-        debug=True
-    )
+# 告警信息推送修改
+@app.route('/edit_alert_data', methods=['GET', 'POST'])
+def edit_alert_data():
+    request_url = None
+    if request.method == 'GET':
+        request_url = request.args
+    elif request.method == 'POST':
+        request_url = request.form
+    id = request_url.get('id', '')
+    color = request_url.get('color', '')
+    alert_data = request_url.get('alert_data', '')
+
+    _ret = {
+        'code': 200,
+        'status': 'success',
+        'errmsg': ''
+    }
+
+    if color == 'red' and alert_data == '':
+        _ret['code'] = 400
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = '缺少参数 alert_data'
+        return json.dumps(_ret)
+
+    if id == '':
+        _ret['code'] = 400
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = '缺少参数 id'
+        return json.dumps(_ret)
+
+    result = MysqlClass().edit_alert_data(id, color, alert_data)
+
+    if result[0] == 200:
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = result[1]
+        return json.dumps(_ret)
+
+
+# 获取验证门的信息
+@app.route('/edit_verification_gate', methods=['GET', 'POST'])
+def edit_verification_gate():
+    request_url = None
+    if request.method == 'GET':
+        request_url = request.args
+    elif request.method == 'POST':
+        request_url = request.form
+    id = request_url.get('id', '')
+    verification_gate = request_url.get('verification_gate', '')
+
+    _ret = {
+        'code': 200,
+        'status': 'success',
+        'errmsg': ''
+    }
+
+    if id == '':
+        _ret['code'] = 400
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = '缺少参数 id'
+        return json.dumps(_ret)
+
+    result = MysqlClass().edit_verification_gate(id, verification_gate)
+
+    if result[0] == 200:
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = result[1]
+        return json.dumps(_ret)

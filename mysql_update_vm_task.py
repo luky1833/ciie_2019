@@ -195,3 +195,71 @@ class MysqlClass(BaseException):
             connect.rollback()
             connect.close()
             return 500, '修改失败'
+
+    def edit_alert_data(self, *args):
+        id = args[0]
+        color = args[1]
+        alert_data = args[2]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        if color == 'red':
+            state = 3
+        elif color == 'green':
+            state = 1
+        elif color == 'yellow':
+            state = 2
+
+        cursor = connect.cursor()
+        sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}'" \
+              "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, id)
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '修改成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '告警信息推送失败'
+
+    def edit_verification_gate(self, *args):
+        id = args[0]
+        verification_gate = args[1]
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        drop_name = json.loads(verification_gate)['deviceName']
+
+        cursor = connect.cursor()
+        sql = "UPDATE drop_list_data SET bounced_content='{}',drop_name='{}'" \
+              "WHERE drop_list_data.id = {}".format(str(verification_gate), drop_name, id)
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+            connect.commit()
+            return 200, '修改成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '验证门信息更新失败'
