@@ -26,6 +26,10 @@
                         </select>
                 </div>
                 <div style="padding: 15px 30px;margin-bottom: 0;" class="field">
+                        <span>轮询批次：</span>
+                        <input type="number" name="batchNum" style="width: 100px;">
+                    </div>
+                <div style="padding: 15px 30px;margin-bottom: 0;" class="field">
                     <span>轮询间隔：</span>
                     <input type="number" name="batchTime" style="width: 100px;">
                 </div>
@@ -81,12 +85,13 @@
             }
         })
         /*
-        * 设置轮询间隔时间（s）
+        * 设置轮询间隔时间（s）、轮询批次 （int）
         */ 
        $('#editBatch').click(function(){
            var batchTime = $('input[name="batchTime"]').val()
+           var batchNum = $('input[name="batchNum"]').val()
            $.ajax({
-               url:'http://47.103.66.5:5000/edit_all_data?all_batch_speed='+batchTime,
+               url:'http://47.103.66.5:5000/edit_all_data?all_batch_speed='+batchTime+'&all_batch_num='+batchNum,
                type:'get',
                success:function(result){
                  var res = JSON.parse(result)
@@ -152,6 +157,7 @@
                 if(res.code=='200'){
                     var batchNum = res.data.all_batch_num
                     var batchTime = res.data.all_batch_speed
+                    $('input[name="batchNum"]').val(batchNum)
                     $('input[name="batchTime"]').val(batchTime)
                     var html = ''
                     for(var i=1;i<=batchNum;i++){

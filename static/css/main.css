@@ -42,12 +42,11 @@
 }
 .layer p{
     color: #fff;
-    font-size: 14px;
-    text-indent: 28px;
+    font-size: 13px;
     padding: 10px 0;
     line-height: 1.5;
     max-height: 95px;
-    overflow: scroll;
+    overflow: hidden;
 }
 .swiper-container{
     position: absolute;

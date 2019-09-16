@@ -178,6 +178,7 @@ var drawFunc = {
      * 计算弹窗位置 （250*150）
     */
     computeLayer:function(position,obj){
+        console.log(obj)
         var lx = position[0]
         var ly = position[1]
         var x = lx*1+12;
@@ -195,10 +196,13 @@ var drawFunc = {
             x = lx*1+12;
             y = ly*1+22
         }
-        var text = obj.bounced_content
+        var jsonstr = obj.bounced_content
+        var params = JSON.parse(jsonstr)
+        console.log(params)
         var time = new Date().toLocaleTimeString()
-        $('.layer p').text(text)
-        $('.layer h5 span').text(time)
+        $('.layer h5').text(params.deviceName)
+        $('.layer p').html(`设备所属组名称:${params['groupNameDevice']} <br/> 总数:${params['ipTotal']} <br/> 未连通数:${params['unconnectedNumber']}`)
+        $('.layer h5 span').text(params.updateTime)
         $('.layer').css({
             'left':x,
             'top':y
@@ -212,7 +216,7 @@ var drawFunc = {
     createLayer:function(){
         var html = `<div class="layerMask">
                         <div class="layer" style="">
-                            <h5>详细信息标题 <span></span></h5>
+                            <h5> <span></span></h5>
                             <p></p>
                         </div>
                     </div>`
