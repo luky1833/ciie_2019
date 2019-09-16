@@ -8,13 +8,6 @@ from flask_cors import CORS
 
 CORS(app, supports_credentials=True)
 
-if __name__ == '__main__':
-    app.run(
-        host='0.0.0.0',
-        port=5000,
-        threaded=True,
-        debug=True
-    )
 
 
 @app.route('/')
@@ -248,3 +241,11 @@ def edit_verification_gate():
         _ret['status'] = 'failed'
         _ret['errmsg'] = result[1]
         return json.dumps(_ret)
+
+if __name__ == '__main__':
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        threaded=True,
+        debug=True
+    )
