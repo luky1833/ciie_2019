@@ -85,12 +85,15 @@ var drawFunc = {
                 _this.textGroup.childAt(index).hide()
             },
             onmouseup: function(e) {
+                $('.swiper-container').show()
                 _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
                         x1:  e.target.position[0]*1+12,
-                        y1: e.target.position[1]*1+22
+                        y1: e.target.position[1]*1+22,
+                        cpx1:_this.computeBC(e.target.position[0]*1+12,e.target.position[1]*1+22)[0],
+                        cpy1:_this.computeBC(e.target.position[1]*1+12,e.target.position[1]*1+22)[1],
                     }
                 })
                 _this.textGroup.childAt(index).attr({
@@ -98,6 +101,7 @@ var drawFunc = {
                 })
             },
             onmousedown:function(){
+                $('.swiper-container').hide()
                 g.childAt(index).hide()
                 _this.textGroup.childAt(index).hide()
             },
@@ -111,6 +115,7 @@ var drawFunc = {
         this.swiperGroup.add(point)
         zr.add(point)
     },
+    
     /** 
      * list渲染处理
      * 
@@ -126,10 +131,34 @@ var drawFunc = {
         this.createSwiper(array)  
     },
     /** 
+     *  计算贝塞尔控制点
+     * */ 
+    computeBC:function(x1,y1){
+        var center = [957,440]
+        var q1 = x1+100
+        var q2 = y1/2
+        if(x1<957&&y1<440){
+            q1 = (957-x1)/2+x1+100
+            q2 = (440-y1)/2+y1
+        }else if(x1<957&&y1>=440){
+            q1 = (957-x1)/2+x1+100
+            q2 = (y1-440)/2 + 440
+        }else if(x1>=957&&y1<440){
+            q1  = (x1-957)/2+957+100
+            q2 = (440-y1)/2+y1
+        }else{
+            q1 = (x1-957)/2+957+100
+            q2 = (y1-440)/2 + 440
+        }
+        console.log(x1,y1,q1,q2)
+        return [q1,q2]
+    },
+    /** 
      * 绘制动态射线
      * */
      drawLine:function(points,color) {
-        var line = new zrender.Line({
+         var _this = this
+        var line = new zrender.BezierCurve({
             style: {
                 lineDash: [10, 10],
                 stroke: color
@@ -138,7 +167,9 @@ var drawFunc = {
                 x2:945+12,
                 y2:410+30,
                 x1: (points.x*1+6),
-                y1: (points.y*1+22)
+                y1: (points.y*1+22),
+                cpx1:_this.computeBC(points.x*1+6,points.y*1+22)[0],
+                cpy1:_this.computeBC(points.x*1+6,points.y*1+22)[1]
             }
         });
         return line
@@ -197,6 +228,7 @@ var drawFunc = {
      * 创建警告轮播
      * */ 
     createSwiper:function(list){
+        console.log(list)
         var _this = this
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){

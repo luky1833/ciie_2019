@@ -19,12 +19,17 @@
         <div class="editPart">
             <h5>编辑区</h5>
             <div class="content">
-                <div style="padding: 15px 30px;" class="field">
+                <div style="padding: 15px 30px;margin-bottom: 0;" class="field">
                         <span>批次：</span>
                         <select name="batch">
                             <option value="0">全部</option>
                         </select>
                 </div>
+                <div style="padding: 15px 30px;margin-bottom: 0;" class="field">
+                    <span>轮询间隔：</span>
+                    <input type="number" name="batchTime" style="width: 100px;">
+                </div>
+                <div class="btn" id="editBatch">修改</div>
                 <div class="btn" id="create">创建坐标点</div>
                 <div class="box" style="display: none;">
                     <div class="field">
@@ -75,9 +80,27 @@
                 }
             }
         })
+        /*
+        * 设置轮询间隔时间（s）
+        */ 
+       $('#editBatch').click(function(){
+           var batchTime = $('input[name="batchTime"]').val()
+           $.ajax({
+               url:'http://47.103.66.5:5000/edit_all_data?all_batch_speed='+batchTime,
+               type:'get',
+               success:function(result){
+                 var res = JSON.parse(result)
+                 if(res.code==200){
+                     alert('操作成功')
+                 }
+               }
+           })
+       })
+        /*
+        * 坐标点信息保存
+        */ 
         $('#save').click(function(){
             var url = ''
-            
             var x = $('input[name="x"]').val()
             var y = $('input[name="y"]').val()
             var site = [x,y].join(',')
@@ -85,11 +108,11 @@
             var batch = $('input[name="batch"]').val()
             var speed = $('input[name="speed"]').val()
             var name = $('input[name="drop_name"]').val()
-            var color = state==1?'green':state==2?'red':'yellow'
+            var color = state==1?'green':state==3?'red':'yellow'
             if($('input[name="id"]').val()){
-                url = domain+'/mysql_update_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color+'&id='+$('input[name="id"]').val()
+                url = domain+'/mysql_update_drop_data?site='+site+'&batch='+batch+'&state='+state+'&drop_radiation_speed='+speed+'&color='+color+'&id='+$('input[name="id"]').val()
             }else{
-                url=domain+'/mysql_add_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color
+                url=domain+'/mysql_add_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color+'&state='+state
             }
             $.ajax({
                 url:url,
@@ -102,6 +125,9 @@
                 }
             })
         })
+        /*
+        * 坐标点信息删除
+        */ 
         $('#delete').click(function(){
             var id = $('input[name="id"]').val()
             $.ajax({
@@ -115,7 +141,9 @@
             }
         })
         })
-
+        /*
+        * 轮询数据获取
+        */ 
         $.ajax({
            url:domain+'/get_all_data',
            type:'get',
@@ -123,6 +151,8 @@
                 var res = JSON.parse(result)
                 if(res.code=='200'){
                     var batchNum = res.data.all_batch_num
+                    var batchTime = res.data.all_batch_speed
+                    $('input[name="batchTime"]').val(batchTime)
                     var html = ''
                     for(var i=1;i<=batchNum;i++){
                         html += `<option value="${i}">${i}</option>`
@@ -131,6 +161,9 @@
                 }
            }
        })
+        /*
+        * 批次获取
+        */    
        $('select[name="batch"]').change(function(e){
            var batch = $('select[name="batch"]').val()!=0?$('select[name="batch"]').val():''
            $.ajax({
