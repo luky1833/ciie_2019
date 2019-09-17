@@ -291,7 +291,7 @@ class MysqlClass(BaseException):
             for i in cursor.fetchall():
                 data_list.append({
                     'id': i[0],
-                    'drop_name': i[1]
+                    'groupNameDevice': i[1]
                 })
             connect.commit()
             return 200, data_list

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d15bc90b-1f0f-4cf5-ab7f-1cdf2aac82a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_update_vm_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_update_vm_task.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -113,7 +112,7 @@
       <workItem from="1568419635422" duration="17486000" />
       <workItem from="1568601544876" duration="6245000" />
       <workItem from="1568684084048" duration="5032000" />
-      <workItem from="1568704763271" duration="2150000" />
+      <workItem from="1568704763271" duration="2672000" />
     </task>
     <servers />
   </component>
