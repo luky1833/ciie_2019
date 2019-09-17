@@ -213,6 +213,8 @@ class MysqlClass(BaseException):
             charset='utf8'
         )
 
+        drop_name = json.loads(alert_data)['groupNameDevice']
+
         if str(state) == '3':
             color = 'red'
         elif str(state) == '1':
@@ -221,8 +223,8 @@ class MysqlClass(BaseException):
             state = 'yellow'
 
         cursor = connect.cursor()
-        sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}'" \
-              "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, id)
+        sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}',drop_name='{}'" \
+              "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, drop_name, id)
         try:
             # 执行SQL语句
             print(sql)
@@ -249,7 +251,7 @@ class MysqlClass(BaseException):
             charset='utf8'
         )
 
-        drop_name = json.loads(verification_gate)['deviceName']
+        drop_name = json.loads(verification_gate)['groupNameDevice']
 
         cursor = connect.cursor()
         sql = "UPDATE drop_list_data SET bounced_content='{}',drop_name='{}'" \
@@ -260,6 +262,39 @@ class MysqlClass(BaseException):
             cursor.execute(sql)
             connect.commit()
             return 200, '修改成功'
+            # 提交到数据库执行
+        except:
+            # 发生错误时回滚
+            connect.rollback()
+            connect.close()
+            return 500, '验证门信息更新失败'
+
+    def get_drop_id_name(self, *args):
+
+        connect = pymysql.Connect(
+            host='47.103.66.5',
+            port=33890,
+            user='root',
+            passwd='ViewSonic123$%^',
+            db='ciie_2019',
+            charset='utf8'
+        )
+
+        data_list = []
+        cursor = connect.cursor()
+        sql = "SELECT drop_list_data.id,drop_list_data.drop_name FROM drop_list_data"
+        try:
+            # 执行SQL语句
+            print(sql)
+            cursor.execute(sql)
+
+            for i in cursor.fetchall():
+                data_list.append({
+                    'id': i[0],
+                    'drop_name': i[1]
+                })
+            connect.commit()
+            return 200, data_list
             # 提交到数据库执行
         except:
             # 发生错误时回滚

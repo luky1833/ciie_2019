@@ -242,6 +242,28 @@ def edit_verification_gate():
         return json.dumps(_ret)
 
 
+# 获取所有点对应的 id和name 信息
+@app.route('/get_drop_id_name', methods=['GET', 'POST'])
+def get_drop_id_name():
+    _ret = {
+        'code': 200,
+        'status': 'success',
+        'data': '',
+        'errmsg': ''
+    }
+
+    result = MysqlClass().get_drop_id_name()
+
+    if result[0] == 200:
+        _ret['data'] = result[1]
+        return json.dumps(_ret)
+    else:
+        _ret['code'] = 500
+        _ret['status'] = 'failed'
+        _ret['errmsg'] = result[1]
+        return json.dumps(_ret)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

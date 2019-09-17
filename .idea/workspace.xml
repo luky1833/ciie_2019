@@ -30,7 +30,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vm_vsphere/ecdc-workflow-vsphere" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/main" />
   </component>
@@ -112,6 +112,8 @@
       <workItem from="1568343394350" duration="7789000" />
       <workItem from="1568419635422" duration="17486000" />
       <workItem from="1568601544876" duration="6245000" />
+      <workItem from="1568684084048" duration="5032000" />
+      <workItem from="1568704763271" duration="2150000" />
     </task>
     <servers />
   </component>
@@ -146,6 +148,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1568618024255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1568706926608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
