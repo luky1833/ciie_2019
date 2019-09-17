@@ -128,7 +128,9 @@ var drawFunc = {
                 array.push({data:list[i],index:i})
             }
         } 
-        this.createSwiper(array)  
+        if(array.length){
+            this.createSwiper(array) 
+        } 
     },
     /** 
      *  计算贝塞尔控制点
@@ -150,7 +152,6 @@ var drawFunc = {
             q1 = (x1-957)/2+957+100
             q2 = (y1-440)/2 + 440
         }
-        console.log(x1,y1,q1,q2)
         return [q1,q2]
     },
     /** 
@@ -200,8 +201,8 @@ var drawFunc = {
         var params = JSON.parse(jsonstr)
         console.log(params)
         var time = new Date().toLocaleTimeString()
-        $('.layer h5').text(params.deviceName)
-        $('.layer p').html(`设备所属组名称:${params['groupNameDevice']} <br/> 总数:${params['ipTotal']} <br/> 未连通数:${params['unconnectedNumber']}`)
+        $('.layer h5').text(params.groupNameDevice)
+        $('.layer p').html(`总数:${params['ipTotal']} <br/> 未连通数:${params['unconnectedNumber']}`)
         $('.layer h5 span').text(params.updateTime)
         $('.layer').css({
             'left':x,
@@ -232,11 +233,18 @@ var drawFunc = {
      * 创建警告轮播
      * */ 
     createSwiper:function(list){
-        console.log(list)
         var _this = this
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){
-            html+=`<div class="swiper-slide"><p>${list[i].data.alert}</p></div>`
+            var jsonObj = JSON.parse(list[i].data.alert)
+            console.log(jsonObj)
+            html+=`<div class="swiper-slide">
+                <section>
+                <p>设备名称：${jsonObj['deviceName']} <span>${jsonObj['alarmTime']}</span> </p>
+                <p>设备所属组名称：${jsonObj['groupNameDevice']}</p>
+                <p>报警信息：${jsonObj['alarmContent']}</p>
+                </section>
+            </div>`
         }
         html+=`</div>
                     <div class="swiper-pagination"></div> 
