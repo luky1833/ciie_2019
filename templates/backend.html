@@ -37,6 +37,10 @@
                 <div class="btn" id="create">创建坐标点</div>
                 <div class="box" style="display: none;">
                     <div class="field">
+                            <span>ID：</span>
+                            <input type="text" name="id" read-only>
+                        </div>
+                    <div class="field">
                         <span class="posi">x: <input type="number" name="x" /></span>
                         <span class="posi">y: <input type="number" name="y" /></span>
                     </div>
@@ -60,7 +64,6 @@
                         <span>射线速率：</span>
                         <input type="number" name="speed" style="width: 100px;">
                     </div>
-                    <input type="hidden" name="id"/>
                     <div class="btn" id="save">保存</div>
                     <div class="btn" id="delete" style="display: none;">删除</div>
                 </div>
@@ -71,19 +74,24 @@
     <script>
         var domain = 'http://47.103.66.5:5000'
         var zr = zrender.init(document.getElementById('main'));
-        $.ajax({
+        function getData(speed){
+            $.ajax({
             url: domain + '/get_drop_list_data',
             type: 'get',
             success: function(result) {
                 $('.layer').hide()
                 var res = JSON.parse(result)
                 if (res.code == '200') {
+                    if(speed){
+                        drawFunc.speed = speed
+                    }
                     drawFunc.init(res.data)
                 } else {
                     alert(res.message)
                 }
             }
         })
+        }
         /*
         * 设置轮询间隔时间（s）、轮询批次 （int）
         */ 
@@ -97,6 +105,7 @@
                  var res = JSON.parse(result)
                  if(res.code==200){
                      alert('操作成功')
+                     window.location.reload()
                  }
                }
            })
@@ -157,6 +166,7 @@
                 if(res.code=='200'){
                     var batchNum = res.data.all_batch_num
                     var batchTime = res.data.all_batch_speed
+                    getData(batchTime)
                     $('input[name="batchNum"]').val(batchNum)
                     $('input[name="batchTime"]').val(batchTime)
                     var html = ''

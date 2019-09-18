@@ -1,6 +1,7 @@
 var zr = zrender.init(document.getElementById('main'));
 var g = new zrender.Group()
 var drawFunc = {
+    speed:0,
     layerState:false,
     swiperGroup:new zrender.Group(),
     textGroup:new zrender.Group(),
@@ -29,6 +30,7 @@ var drawFunc = {
      *******/ 
     createPoint:function(p,index){
         var _this = this
+        var speed = this.speed?this.speed:5
         var color = p.color
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]
@@ -41,13 +43,30 @@ var drawFunc = {
             style:{
                 text:'名称：'+p.drop_name+'\nID：'+p.id,
                 textFill:p.color,
-                fontSize:'16'
+                fontSize:'16',
             }
         })
+        var first = 0
+        var last = 0.001
+        var liftcolor = zrender.color.lift('#fff', 1)
+        setInterval(()=>{
+            first+=0.005;
+            last+=0.005;
+            var linearColor = new zrender.LinearGradient(x,y,945,410,[{offset:0,color:p.color},{offset:1,color:p.color}],true)
+            linearColor.addColorStop(first,liftcolor)
+            linearColor.addColorStop(last,p.color)
+            line.attr({
+                style:{
+                    stroke: linearColor
+                }})
+            if(last>=0.99){
+                first=0
+                last=0.001
+            }
+        },speed)
         text.hide()
         this.textGroup.add(text)
         zr.add(text)
-
         g.add(line)
         zr.add(line)
         line.animate('style', true)
@@ -67,18 +86,24 @@ var drawFunc = {
             },
             onmouseover:function(e){
                 this.attr({
+                    position:[e.target.position[0]*1-6,e.target.position[1]*1-6],
                     scale: [1.2, 1.2],
                     style:{
                         image:'../../static/images/jbh/'+color+'_active.png',
+                        width:20,
+                        height:27,
                     }
                 })
                 _this.textGroup.childAt(index).show()
             },
-            onmouseout:function(){
+            onmouseout:function(e){
                 this.attr({
+                    position:[e.target.position[0]*1+6,e.target.position[1]*1+6],
                     scale: [1, 1],
                     style:{
                         image:'../../static/images/jbh/'+color+'.png',
+                        width:16,
+                        height:22,
                     }
                 })
                 _this.textGroup.childAt(index).hide()
@@ -138,23 +163,54 @@ var drawFunc = {
         //this.createSwiper(array)  
     },
     /** 
+     *  计算贝塞尔控制点
+     * */ 
+    computeBC:function(x1,y1){
+        var center = [957,440]
+        var q1 = x1+100
+        var q2 = y1/2
+        
+        if(x1<957&&y1<440){
+            q1 = (957-x1)/2+x1
+            q2 = y1-200
+            console.log(x1,q1)
+        }else if(x1<957&&y1>=440){
+            q1 = (957-x1)/2+x1
+            q2 = y1-250
+        }else if(x1>=957&&y1<440){
+            q1 = (957-x1)/2+x1
+            q2 = 400
+        }else{
+            q1 = (957-x1)/2+x1
+            q2 = y1-250
+        }
+        return [q1,q2]
+    },
+    /** 
      * 绘制动态射线
      * */
-     drawLine:function(points,color) {
-        var line = new zrender.Line({
-            style: {
-                lineDash: [10, 10],
-                stroke: color
-            },
-            shape: {
-                x2:945+12,
-                y2:410+30,
-                x1: (points.x*1+6),
-                y1: (points.y*1+22)
-            }
-        });
-        return line
-    },
+    drawLine:function(points,color) {
+        var _this = this
+       var linearColor = new zrender.LinearGradient(points.x,points.y,945,410,[{offset:0,color:color},{offset:0.1,color:color}])
+       var line = new zrender.BezierCurve({
+           style: {
+               //lineDash: [10, 10],
+               stroke: linearColor,
+               shadowBlur:5,
+               shadowColor:'#fff',
+               lineWidth:1,  
+           },
+           shape: {
+               x2:945+12,
+               y2:410+30,
+               x1: (points.x*1+6),
+               y1: (points.y*1+22),
+               cpx1:_this.computeBC(points.x*1+6,points.y*1+22)[0],
+               cpy1:_this.computeBC(points.x*1+6,points.y*1+22)[1]
+           }
+       });
+       return line
+   },
     /** 
      * 计算弹窗位置 （250*150）
     */
@@ -234,7 +290,7 @@ var drawFunc = {
             drop_name: "newPoint",
             drop_radiation_speed: 0,
             id: 1,
-            site: "0,0",
+            site: "200,200",
             state: "1",
         }
         $('.box').show()

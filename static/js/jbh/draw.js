@@ -1,6 +1,7 @@
 var zr = zrender.init(document.getElementById('main'));
 var g = new zrender.Group()
 var drawFunc = {
+    speed:0,
     layerState:false,
     swiperGroup:new zrender.Group(),
     textGroup:new zrender.Group(),
@@ -29,6 +30,7 @@ var drawFunc = {
      *******/ 
     createPoint:function(p,index){
         var _this = this
+        var speed = this.speed?this.speed:5
         var color = p.color
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]
@@ -36,25 +38,38 @@ var drawFunc = {
             x: x,
             y: y
         },color)
+        var first = 0
+        var last = 0.001
+        var liftcolor = zrender.color.lift('#fff', 1)
+        setInterval(()=>{
+            first+=0.005;
+            last+=0.005;
+            var linearColor = new zrender.LinearGradient(x,y,945,410,[{offset:0,color:p.color},{offset:1,color:p.color}],true)
+            linearColor.addColorStop(first,liftcolor)
+            linearColor.addColorStop(last,p.color)
+            line.attr({
+                style:{
+                    stroke: linearColor
+                }})
+            if(last>=0.99){
+                first=0
+                last=0.001
+            }
+        },speed)
         var text = new zrender.Text({
             position:[x*1+25,y],
             style:{
                 text:'名称：'+p.drop_name,
                 textFill:p.color,
                 fontSize:'16'
-            }
+            },
+            z:999
         })
         text.hide()
         this.textGroup.add(text)
         zr.add(text)
-
         g.add(line)
         zr.add(line)
-        line.animate('style', true)
-                .when(1000, {
-                    lineDashOffset: -20
-                })
-                .start();
         var point = new zrender.Image({
             position:[x,y],
             scale: [1, 1],
@@ -66,22 +81,29 @@ var drawFunc = {
                 height:22,
             },
             onmouseover:function(e){
+                text.show()
+                _this.textGroup.childAt(index).show()
                 this.attr({
-                    scale: [1.2, 1.2],
+                    position:[e.target.position[0]*1-6,e.target.position[1]*1-6],
                     style:{
                         image:'../../static/images/jbh/'+color+'_active.png',
+                        width:24,
+                        height:33,
                     }
                 })
-                _this.textGroup.childAt(index).show()
+                
             },
-            onmouseout:function(){
+            onmouseout:function(e){
                 this.attr({
-                    scale: [1, 1],
+                    position:[e.target.position[0]*1+6,e.target.position[1]*1+6],
+                    scale: [1.2, 1.2],
                     style:{
                         image:'../../static/images/jbh/'+color+'.png',
+                        width:16,
+                        height:22,
                     }
                 })
-                _this.textGroup.childAt(index).hide()
+                text.hide()
                 _this.textGroup.childAt(index).hide()
             },
             onmouseup: function(e) {
@@ -121,6 +143,7 @@ var drawFunc = {
      * 
     */
     drawListPoint(list){
+        console.log('drawListPoint')
         var array = []
         for(var i=0;i<list.length;i++){
             this.createPoint(list[i],i)
@@ -130,7 +153,9 @@ var drawFunc = {
         } 
         if(array.length){
             this.createSwiper(array) 
-        } 
+        }else{
+            $('.swiper-container').remove()
+        }
     },
     /** 
      *  计算贝塞尔控制点
@@ -139,18 +164,19 @@ var drawFunc = {
         var center = [957,440]
         var q1 = x1+100
         var q2 = y1/2
+        
         if(x1<957&&y1<440){
-            q1 = (957-x1)/2+x1+100
-            q2 = (440-y1)/2+y1
+            q1 = (957-x1)/2+x1
+            q2 = y1-200
         }else if(x1<957&&y1>=440){
-            q1 = (957-x1)/2+x1+100
-            q2 = (y1-440)/2 + 440
+            q1 = (957-x1)/2+x1
+            q2 = y1-250
         }else if(x1>=957&&y1<440){
-            q1  = (x1-957)/2+957+100
-            q2 = (440-y1)/2+y1
+            q1 = (957-x1)/2+x1
+            q2 = 400
         }else{
-            q1 = (x1-957)/2+957+100
-            q2 = (y1-440)/2 + 440
+            q1 = (957-x1)/2+x1
+            q2 = y1-250
         }
         return [q1,q2]
     },
@@ -159,10 +185,14 @@ var drawFunc = {
      * */
      drawLine:function(points,color) {
          var _this = this
+        var linearColor = new zrender.LinearGradient(points.x,points.y,945,410,[{offset:0,color:color},{offset:0.1,color:color}])
         var line = new zrender.BezierCurve({
             style: {
-                lineDash: [10, 10],
-                stroke: color
+                //lineDash: [10, 10],
+                stroke: linearColor,
+                shadowBlur:5,
+                shadowColor:'#fff',
+                lineWidth:1,  
             },
             shape: {
                 x2:945+12,
@@ -237,7 +267,6 @@ var drawFunc = {
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){
             var jsonObj = JSON.parse(list[i].data.alert)
-            console.log(jsonObj)
             html+=`<div class="swiper-slide">
                 <section>
                 <p>设备名称：${jsonObj['deviceName']} <span>${jsonObj['alarmTime']}</span> </p>
