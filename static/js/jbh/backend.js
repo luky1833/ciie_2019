@@ -30,7 +30,7 @@ var drawFunc = {
      *******/ 
     createPoint:function(p,index){
         var _this = this
-        var speed = this.speed?this.speed:5
+        var speed = p.drop_radiation_speed!=0?p.drop_radiation_speed:20
         var color = p.color
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]

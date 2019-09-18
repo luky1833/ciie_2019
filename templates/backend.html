@@ -82,9 +82,6 @@
                 $('.layer').hide()
                 var res = JSON.parse(result)
                 if (res.code == '200') {
-                    if(speed){
-                        drawFunc.speed = speed
-                    }
                     drawFunc.init(res.data)
                 } else {
                     alert(res.message)

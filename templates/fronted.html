@@ -28,7 +28,7 @@
                 var res = JSON.parse(result)
                 if(res.code=='200'){
                     var batchTime = res.data.all_batch_speed
-                    getData(1,batchTime)
+                    getData(1)
                 }
            }
        })
@@ -40,9 +40,6 @@
                     $('.layer').hide()
                     var res = JSON.parse(result)
                     if(res.code=='200'){
-                        if(speed){
-                            drawFunc.speed = speed
-                        }
                         drawFunc.init(res.data)
                     }else{
                         alert(res.message)
