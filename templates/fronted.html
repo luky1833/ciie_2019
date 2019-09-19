@@ -21,6 +21,8 @@
     <script src="../static/js/jbh/draw.js"></script>
     <script>
         var domain = 'http://47.103.66.5:5000'
+        var arrString = []
+        
         $.ajax({
            url:domain+'/get_all_data',
            type:'get',
@@ -28,7 +30,7 @@
                 var res = JSON.parse(result)
                 if(res.code=='200'){
                     var batchTime = res.data.all_batch_speed
-                    getData(1)
+                    //getData(1)
                 }
            }
        })
@@ -40,17 +42,26 @@
                     $('.layer').hide()
                     var res = JSON.parse(result)
                     if(res.code=='200'){
-                        drawFunc.init(res.data)
+                        //console.log(arrString.length!=0)
+                        if(arrString.length!=0){
+                            if(JSON.stringify(arrString)!=JSON.stringify(res.data)){
+                                drawFunc.init(res.data)
+                                arrString = res.data
+                            }     
+                        }else{
+                            drawFunc.init(res.data)
+                            arrString = res.data
+                        } 
                     }else{
                         alert(res.message)
                     }
                 }
             })
         }
-        getData(1)
         /*
         * 轮询查数据
         */ 
+        var batch = 0
        $.ajax({
            url:domain+'/get_all_data',
            type:'get',
@@ -59,9 +70,19 @@
                 if(res.code=='200'){
                     var batchNum = res.data.all_batch_num
                     var batchTime = res.data.all_batch_speed
-                    var batch = 1
+                    //var batch = 1
+                    getData(1)
+                    var reflashFirst = setInterval(()=>{
+                        getData(1)
+                    },2000)
                     var timer = setInterval(function(){
+                        clearInterval(reflashFirst)
                         batch++
+                        console.log(batch)
+                        reflashFirst = setInterval(()=>{
+                            console.log(batch+1)
+                            getData(batch+1)
+                        },2000)
                         getData(batch)
                         if(batch>=batchNum){
                             batch=0
