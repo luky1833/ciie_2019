@@ -9,13 +9,11 @@ var drawFunc = {
     createCenterPoint:function(){
         var point = new zrender.Image({
             style:{
-                image:'../../static/images/jbh/red.png',
-                x:945,
+                image:'../../static/images/jbh/center.png',
+                x:925,
                 y:410,
-                width:24,
-                height:33
             },
-            z:9999
+            z:1
         })
         zr.add(point)
     },
@@ -193,6 +191,7 @@ var drawFunc = {
         var _this = this
        var linearColor = new zrender.LinearGradient(points.x,points.y,945,410,[{offset:0,color:color},{offset:0.1,color:color}])
        var line = new zrender.BezierCurve({
+           z:9,
            style: {
                //lineDash: [10, 10],
                stroke: linearColor,
@@ -202,7 +201,7 @@ var drawFunc = {
            },
            shape: {
                x2:945+12,
-               y2:410+30,
+               y2:400+30,
                x1: (points.x*1+6),
                y1: (points.y*1+22),
                cpx1:_this.computeBC(points.x*1+6,points.y*1+22)[0],
