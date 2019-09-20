@@ -50,7 +50,7 @@ var drawFunc = {
         setInterval(()=>{
             first+=0.005;
             last+=0.005;
-            var linearColor = new zrender.LinearGradient(x,y,945,410,[{offset:0,color:p.color},{offset:1,color:p.color}],true)
+            var linearColor = new zrender.LinearGradient(x,y,945,410,[{offset:0,color:p.color?p.color:'green'},{offset:1,color:p.color?p.color:'green'}],true)
             linearColor.addColorStop(first,liftcolor)
             linearColor.addColorStop(last,p.color)
             line.attr({
@@ -73,6 +73,7 @@ var drawFunc = {
                 })
                 .start();
         var point = new zrender.Image({
+            z:999,
             position:[x,y],
             scale: [1, 1],
             style:{
@@ -121,9 +122,19 @@ var drawFunc = {
                 _this.textGroup.childAt(index).attr({
                     position:[e.target.position[0]*1+25,e.target.position[1]]
                 })
-                $.ajax({
-                    url:''
-                })
+                var site = [e.target.position[0],e.target.position[1]].join(',')
+                if(p.id){
+                    $.ajax({
+                        url: 'http://47.103.66.5:5000/mysql_update_drop_data?site='+site+'&batch='+p.batch+'&state='+p.state+'&drop_radiation_speed='+p.drop_radiation_speed+'&color='+p.color+'&id='+p.id,
+                        success:function(result){
+                            var res = JSON.parse(result)
+                            if(res.code=='200'){
+                                //window.location.reload()
+                            }
+                        }
+                    })
+                }
+                
             },
             onmousedown:function(){
                 g.childAt(index).hide()
@@ -136,7 +147,7 @@ var drawFunc = {
                 $('input[name="batch"]').val(p.batch)
                 $('input[name="speed"]').val(p.drop_radiation_speed)
                 $('input[name="drop_name"]').val(p.drop_name?p.drop_name:0)
-                $('input[name="id"]').val(p.id)
+                $('input[name="id"]').val(p.id?p.id:'')
                // _this.computeLayer(e.target.position,p)
 
             },
@@ -189,7 +200,8 @@ var drawFunc = {
      * */
     drawLine:function(points,color) {
         var _this = this
-       var linearColor = new zrender.LinearGradient(points.x,points.y,945,410,[{offset:0,color:color},{offset:0.1,color:color}])
+        var pcolor  = color?color:'green'
+       var linearColor = new zrender.LinearGradient(points.x,points.y,945,410,[{offset:0,color:pcolor},{offset:0.1,color:pcolor}])
        var line = new zrender.BezierCurve({
            z:9,
            style: {
@@ -279,7 +291,7 @@ var drawFunc = {
      * 
      * */
     createNewPoint:function(){
-        $('input[name="id"]').val()
+        $('input[name="id"]').val('')
         var index = this.swiperGroup.childCount()
         var p = {
             alert: "",
@@ -288,7 +300,7 @@ var drawFunc = {
             color: "green",
             drop_name: "newPoint",
             drop_radiation_speed: 0,
-            id: 1,
+            id: null,
             site: "200,200",
             state: "1",
         }
