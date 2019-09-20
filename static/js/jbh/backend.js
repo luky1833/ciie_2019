@@ -28,6 +28,7 @@ var drawFunc = {
      *******/ 
     createPoint:function(p,index){
         var _this = this
+        var isDrag = false
         var speed = p.drop_radiation_speed!=0?p.drop_radiation_speed:20
         var color = p.color
         var x = p.site.split(',')[0]
@@ -108,6 +109,33 @@ var drawFunc = {
                 _this.textGroup.childAt(index).hide()
                 _this.textGroup.childAt(index).hide()
             },
+            onmouseleave:function(e){
+                _this.textGroup.childAt(index).show()
+                g.childAt(index).show()
+                g.childAt(index).attr({
+                    shape: {
+                        x1:  e.target.position[0]*1+12,
+                        y1: e.target.position[1]*1+22
+                    }
+                })
+                $('input[name="x"]').val(e.target.position[0])
+                $('input[name="y"]').val(e.target.position[1])
+                _this.textGroup.childAt(index).attr({
+                    position:[e.target.position[0]*1+25,e.target.position[1]]
+                })
+                var site = [e.target.position[0],e.target.position[1]].join(',')
+                if(p.id){
+                    $.ajax({
+                        url: 'http://47.103.66.5:5000/mysql_update_drop_data?site='+site+'&batch='+p.batch+'&state='+p.state+'&drop_radiation_speed='+p.drop_radiation_speed+'&color='+p.color+'&id='+p.id,
+                        success:function(result){
+                            var res = JSON.parse(result)
+                            if(res.code=='200'){
+                                //window.location.reload()
+                            }
+                        }
+                    })
+                }
+            },
             onmouseup: function(e) {
                 _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
@@ -137,8 +165,36 @@ var drawFunc = {
                 
             },
             onmousedown:function(){
+                isDrag = true
                 g.childAt(index).hide()
                 _this.textGroup.childAt(index).hide()
+            },
+            ondragend:function(e){
+                _this.textGroup.childAt(index).show()
+                g.childAt(index).show()
+                g.childAt(index).attr({
+                    shape: {
+                        x1:  e.target.position[0]*1+12,
+                        y1: e.target.position[1]*1+22
+                    }
+                })
+                $('input[name="x"]').val(e.target.position[0])
+                $('input[name="y"]').val(e.target.position[1])
+                _this.textGroup.childAt(index).attr({
+                    position:[e.target.position[0]*1+25,e.target.position[1]]
+                })
+                var site = [e.target.position[0],e.target.position[1]].join(',')
+                if(p.id){
+                    $.ajax({
+                        url: 'http://47.103.66.5:5000/mysql_update_drop_data?site='+site+'&batch='+p.batch+'&state='+p.state+'&drop_radiation_speed='+p.drop_radiation_speed+'&color='+p.color+'&id='+p.id,
+                        success:function(result){
+                            var res = JSON.parse(result)
+                            if(res.code=='200'){
+                                //window.location.reload()
+                            }
+                        }
+                    })
+                }
             },
             onclick:function(e){
                 $('.box').show()
@@ -182,7 +238,6 @@ var drawFunc = {
         if(x1<957&&y1<440){
             q1 = (957-x1)/2+x1
             q2 = y1-200
-            console.log(x1,q1)
         }else if(x1<957&&y1>=440){
             q1 = (957-x1)/2+x1
             q2 = y1-250

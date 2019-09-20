@@ -120,6 +120,22 @@ var drawFunc = {
                     position:[e.target.position[0]*1+25,e.target.position[1]]
                 })
             },
+            ondragend:function(e){
+                $('.swiper-container').show()
+                _this.textGroup.childAt(index).show()
+                g.childAt(index).show()
+                g.childAt(index).attr({
+                    shape: {
+                        x1:  e.target.position[0]*1+12,
+                        y1: e.target.position[1]*1+22,
+                        cpx1:_this.computeBC(e.target.position[0]*1+12,e.target.position[1]*1+22)[0],
+                        cpy1:_this.computeBC(e.target.position[1]*1+12,e.target.position[1]*1+22)[1],
+                    }
+                })
+                _this.textGroup.childAt(index).attr({
+                    position:[e.target.position[0]*1+25,e.target.position[1]]
+                })
+            },
             onmousedown:function(){
                 $('.swiper-container').hide()
                 g.childAt(index).hide()
@@ -262,15 +278,16 @@ var drawFunc = {
      * 创建警告轮播
      * */ 
     createSwiper:function(list){
+        console.log(list)
         var _this = this
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){
             var jsonObj = JSON.parse(list[i].data.alert)
             html+=`<div class="swiper-slide">
                 <section>
-                <p>设备名称：${jsonObj['deviceName']} <span>${jsonObj['alarmTime']}</span> </p>
-                <p>设备所属组名称：${jsonObj['groupNameDevice']}</p>
-                <p>报警信息：${jsonObj['alarmContent']}</p>
+                <p>设备名称：${jsonObj['deviceName']?jsonObj['deviceName']:""} <span>${jsonObj['alarmTime']?jsonObj['alarmTime']:''}</span> </p>
+                <p>设备所属组名称：${jsonObj['groupNameDevice']?jsonObj['groupNameDevice']:''}</p>
+                <p>报警信息：${jsonObj['alarmContent']?jsonObj['alarmContent']:''}</p>
                 </section>
             </div>`
         }
