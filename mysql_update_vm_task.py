@@ -213,18 +213,23 @@ class MysqlClass(BaseException):
             charset='utf8'
         )
 
-        drop_name = json.loads(alert_data)['groupNameDevice']
+        sql = ''
 
         if str(state) == '3':
             color = 'red'
+            sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}'" \
+                  "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, id)
         elif str(state) == '1':
-            state = 'green'
+            color = 'green'
+            sql = "UPDATE drop_list_data SET state='{}', color='{}'" \
+                  "WHERE drop_list_data.id = {}".format(state, color, id)
         elif str(state) == '2':
-            state = 'yellow'
+            color = 'yellow'
+            sql = "UPDATE drop_list_data SET state='{}', color='{}'" \
+                  "WHERE drop_list_data.id = {}".format(state, color, id)
 
         cursor = connect.cursor()
-        sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}',drop_name='{}'" \
-              "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, drop_name, id)
+
         try:
             # 执行SQL语句
             print(sql)

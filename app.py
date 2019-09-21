@@ -184,12 +184,12 @@ def edit_alert_data():
         'status': 'success',
         'errmsg': ''
     }
-
-    if str(color) == '3' and alert_data == '':
-        _ret['code'] = 400
-        _ret['status'] = 'failed'
-        _ret['errmsg'] = '缺少参数 alert_data'
-        return json.dumps(_ret)
+    #
+    # if str(color) == '3' and alert_data == '':
+    #     _ret['code'] = 400
+    #     _ret['status'] = 'failed'
+    #     _ret['errmsg'] = '缺少参数 alert_data'
+    #     return json.dumps(_ret)
 
     if id == '':
         _ret['code'] = 400
