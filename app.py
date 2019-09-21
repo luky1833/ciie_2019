@@ -169,6 +169,7 @@ def edit_all_data():
 
 # 告警信息推送修改
 @app.route('/edit_alert_data', methods=['GET', 'POST'])
+@app.route('/api/edit_alert_data', methods=['GET', 'POST'])
 def edit_alert_data():
     request_url = None
     if request.method == 'GET':
@@ -210,6 +211,7 @@ def edit_alert_data():
 
 # 获取验证门的信息
 @app.route('/edit_verification_gate', methods=['GET', 'POST'])
+@app.route('/api/edit_verification_gate', methods=['GET', 'POST'])
 def edit_verification_gate():
     request_url = None
     if request.method == 'GET':
@@ -244,6 +246,7 @@ def edit_verification_gate():
 
 # 获取所有点对应的 id和name 信息
 @app.route('/get_drop_id_name', methods=['GET', 'POST'])
+@app.route('/api/get_drop_id_name', methods=['GET', 'POST'])
 def get_drop_id_name():
     _ret = {
         'code': 200,
