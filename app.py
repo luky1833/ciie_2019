@@ -57,6 +57,7 @@ def get_drop_list_data():
 @app.route('/mysql_update_drop_data', methods=['GET'])
 def update_drop_data():
     id = request.args.get('id', 1)
+    drop_name = request.args.get('drop_name', '')
     site = request.args.get('site', '')
     color = request.args.get('color', '')
     state = request.args.get('state', '')
@@ -69,7 +70,7 @@ def update_drop_data():
         'data': {}
     }
 
-    result = MysqlClass().mysql_update_drop_data(id, site, color, batch, drop_radiation_speed, state)
+    result = MysqlClass().mysql_update_drop_data(id, site, color, batch, drop_radiation_speed, state, drop_name)
 
     if result[0] == 200:
         _ret['data'] = result[1]

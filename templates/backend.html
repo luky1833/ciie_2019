@@ -92,7 +92,7 @@
         }
         /*
         * 设置轮询间隔时间（s）、轮询批次 （int）
-        */ 
+        */
        $('#editBatch').click(function(){
            var batchTime = $('input[name="batchTime"]').val()
            var batchNum = $('input[name="batchNum"]').val()
@@ -110,7 +110,7 @@
        })
         /*
         * 坐标点信息保存
-        */ 
+        */
         $('#save').click(function(){
             var url = ''
             var x = $('input[name="x"]').val()
@@ -122,7 +122,7 @@
             var name = $('input[name="drop_name"]').val()
             var color = state==1?'green':state==3?'red':'yellow'
             if($('input[name="id"]').val()){
-                url = domain+'/mysql_update_drop_data?site='+site+'&batch='+batch+'&state='+state+'&drop_radiation_speed='+speed+'&color='+color+'&id='+$('input[name="id"]').val()
+                url = domain+'/mysql_update_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&state='+state+'&drop_radiation_speed='+speed+'&color='+color+'&id='+$('input[name="id"]').val()
             }else{
                 url=domain+'/mysql_add_drop_data?site='+site+'&batch='+batch+'&drop_name='+name+'&drop_radiation_speed='+speed+'&color='+color+'&state='+state
             }
@@ -139,7 +139,7 @@
         })
         /*
         * 坐标点信息删除
-        */ 
+        */
         $('#delete').click(function(){
             var id = $('input[name="id"]').val()
             $.ajax({
@@ -155,7 +155,7 @@
         })
         /*
         * 轮询数据获取
-        */ 
+        */
         $.ajax({
            url:domain+'/get_all_data',
            type:'get',
@@ -177,7 +177,7 @@
        })
         /*
         * 批次获取
-        */    
+        */
        $('select[name="batch"]').change(function(e){
            var batch = $('select[name="batch"]').val()!=0?$('select[name="batch"]').val():''
            $.ajax({

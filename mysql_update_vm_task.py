@@ -54,6 +54,7 @@ class MysqlClass(BaseException):
         batch = args[3]
         drop_radiation_speed = args[4]
         state = args[5]
+        drop_name = args[6]
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -65,8 +66,9 @@ class MysqlClass(BaseException):
         )
 
         cursor = connect.cursor()
-        sql = "UPDATE drop_list_data SET site = '{}',color = '{}',batch='{}',drop_radiation_speed='{}',state='{}'" \
-              "WHERE drop_list_data.id = {}".format(site, color, batch, drop_radiation_speed, state, id)
+        sql = "UPDATE drop_list_data SET site = '{}',color = '{}',batch='{}',drop_radiation_speed='{}',state='{}'," \
+              "drop_name='{}'" \
+              "WHERE drop_list_data.id = {}".format(site, color, batch, drop_radiation_speed, state, drop_name, id)
         try:
             # 执行SQL语句
             print(sql)
