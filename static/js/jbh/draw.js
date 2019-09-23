@@ -69,6 +69,7 @@ var drawFunc = {
         g.add(line)
         zr.add(line)
         var point = new zrender.Image({
+            z:999,
             position:[x,y],
             scale: [1, 1],
             style:{
@@ -216,7 +217,7 @@ var drawFunc = {
                 cpx1:_this.computeBC(points.x*1+6,points.y*1+22)[0],
                 cpy1:_this.computeBC(points.x*1+6,points.y*1+22)[1]
             },
-            z:99
+            z:9
         });
         return line
     },
@@ -278,7 +279,6 @@ var drawFunc = {
      * 创建警告轮播
      * */ 
     createSwiper:function(list){
-        console.log(list)
         var _this = this
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){
@@ -304,9 +304,8 @@ var drawFunc = {
             speed:800,
             loop:true,
             autoplay: {
-                delay: 3000,
+                delay: 5000,
                 stopOnLastSlide: false,
-                disableOnInteraction: true,
             },
             on:{
                 click:function(){

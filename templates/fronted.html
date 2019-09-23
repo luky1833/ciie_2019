@@ -45,6 +45,7 @@
                         //console.log(arrString.length!=0)
                         if(arrString.length!=0){
                             if(JSON.stringify(arrString)!=JSON.stringify(res.data)){
+                                $('.swiper-container').remove()
                                 drawFunc.init(res.data)
                                 arrString = res.data
                             }     
@@ -78,9 +79,8 @@
                     var timer = setInterval(function(){
                         clearInterval(reflashFirst)
                         batch++
-                        console.log(batch)
+                        
                         reflashFirst = setInterval(()=>{
-                            console.log(batch+1)
                             getData(batch+1)
                         },2000)
                         getData(batch)
