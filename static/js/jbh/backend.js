@@ -157,7 +157,7 @@ var drawFunc = {
                 var site = [e.target.position[0], e.target.position[1]].join(',')
                 if (p.id) {
                     $.ajax({
-                        url: 'http://47.103.66.5:5000/mysql_update_drop_data?site=' + site + '&batch=' + p.batch + '&state=' + p.state + '&drop_radiation_speed=' + p.drop_radiation_speed + '&color=' + p.color + '&id=' + p.id,
+                        url: 'http://47.103.66.5:5000/mysql_update_drop_data?name='+p.drop_name+'&site=' + site + '&batch=' + p.batch + '&state=' + p.state + '&drop_radiation_speed=' + p.drop_radiation_speed + '&color=' + p.color + '&id=' + p.id,
                         success: function (result) {
                             var res = JSON.parse(result)
                             if (res.code == '200') {
