@@ -138,8 +138,11 @@ var drawFunc = {
                     position:[e.target.position[0]*1+25,e.target.position[1]]
                 })
             },
-            onmousedown:function(){
+            ondrag:function(){
                 $('.swiper-container').hide()
+            },
+            onmousedown:function(){
+                //$('.swiper-container').hide()
                 g.childAt(index).hide()
                 _this.textGroup.childAt(index).hide()
             },
