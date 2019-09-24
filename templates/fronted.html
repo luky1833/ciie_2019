@@ -39,12 +39,11 @@
             url:domain+'/get_drop_list_data?batch='+batch,
             type:'get',
             success:function(result){
-                    $('.layer').hide()
                     var res = JSON.parse(result)
                     if(res.code=='200'){
-                        //console.log(arrString.length!=0)
                         if(arrString.length!=0){
                             if(JSON.stringify(arrString)!=JSON.stringify(res.data)){
+                                $('.layerMask').hide()
                                 $('.swiper-container').remove()
                                 drawFunc.init(res.data)
                                 arrString = res.data
@@ -79,7 +78,6 @@
                     var timer = setInterval(function(){
                         clearInterval(reflashFirst)
                         batch++
-                        
                         reflashFirst = setInterval(()=>{
                             getData(batch+1)
                         },2000)

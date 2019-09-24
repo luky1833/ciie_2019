@@ -84,6 +84,7 @@ var drawFunc = {
                 _this.textGroup.childAt(index).show()
                 this.attr({
                     position:[e.target.position[0]*1-6,e.target.position[1]*1-6],
+                    scale: [1.1, 1.1],
                     style:{
                         image:'../../static/images/jbh/'+color+'_active.png',
                         width:24,
@@ -95,7 +96,7 @@ var drawFunc = {
             onmouseout:function(e){
                 this.attr({
                     position:[e.target.position[0]*1+6,e.target.position[1]*1+6],
-                    scale: [1.2, 1.2],
+                    scale: [1, 1],
                     style:{
                         image:'../../static/images/jbh/'+color+'.png',
                         width:16,
@@ -162,7 +163,7 @@ var drawFunc = {
         var array = []
         for(var i=0;i<list.length;i++){
             this.createPoint(list[i],i)
-            if(list[i].state=='3'){
+            if(list[i].state=='3'&&list[i].alert&&list[i].alert!='null'&&list[i].alert!='""'){
                 array.push({data:list[i],index:i})
             }
         } 
@@ -225,18 +226,17 @@ var drawFunc = {
      * 计算弹窗位置 （250*150）
     */
     computeLayer:function(position,obj){
-        console.log(obj)
         var lx = position[0]
         var ly = position[1]
         var x = lx*1+12;
         var y = ly*1+22
-        if(lx>=1920-250&&y<1080-150){
+        if(lx>=1920-400&&y<1080-150){
             x = lx-250-12;
             y = ly+22
-        }else if(lx>=1920-250&&ly>=1080-150){
+        }else if(lx>=1920-400&&ly>=1080-150){
             x = lx - 250 - 12
             y = ly - 150 - 22
-        }else if(lx<1920-250&&ly>=1080-150){
+        }else if(lx<1920-400&&ly>=1080-150){
             x = lx +12
             y = ly - 150
         }else{
@@ -247,9 +247,9 @@ var drawFunc = {
         var params = JSON.parse(jsonstr)
         console.log(params)
         var time = new Date().toLocaleTimeString()
-        $('.layer h5').text(params.groupNameDevice)
+        $('.layer h5 .tit').text(params.groupNameDevice)
         $('.layer p').html(`总数:${params['ipTotal']} <br/> 未连通数:${params['unconnectedNumber']}`)
-        $('.layer h5 span').text(params.updateTime)
+        $('.layer h5 .time').text(params.updateTime)
         $('.layer').css({
             'left':x,
             'top':y
@@ -263,7 +263,7 @@ var drawFunc = {
     createLayer:function(){
         var html = `<div class="layerMask">
                         <div class="layer" style="">
-                            <h5> <span></span></h5>
+                            <h5><em class="tit"></em><span class="time"></span></h5>
                             <p></p>
                         </div>
                     </div>`
@@ -282,7 +282,11 @@ var drawFunc = {
         var _this = this
         var html = `<div class="swiper-container"><div class="swiper-wrapper">`
         for(var i =0;i<list.length;i++){
-            var jsonObj = JSON.parse(list[i].data.alert)
+            var str = JSON.stringify(list[i].data.alert)
+            var newStr = str.replace(/(\\r\\n)/g,"");
+            var jsonObj = JSON.parse(JSON.parse(newStr))
+            console.log(list)
+            console.log(jsonObj.deviceName)
             html+=`<div class="swiper-slide">
                 <section>
                 <p>设备名称：${jsonObj['deviceName']?jsonObj['deviceName']:""} <span>${jsonObj['alarmTime']?jsonObj['alarmTime']:''}</span> </p>
