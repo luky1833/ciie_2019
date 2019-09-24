@@ -214,13 +214,31 @@ class MysqlClass(BaseException):
             db='ciie_2019',
             charset='utf8'
         )
+        try:
+            if alert_data == '""' or alert_data == 'null' or alert_data == None or alert_data == '':
+                pass
+            else:
+                alert_data = {
+                    'groupNameDevice': str(json.loads(alert_data)['groupNameDevice']),
+                    'deviceName': str(json.loads(alert_data)['deviceName']),
+                    'alarmTime': str(json.loads(alert_data)['alarmTime']),
+                    'alarmContent': str(json.loads(alert_data)['alarmContent'])
+                }
+
+            alert_data = json.dumps(alert_data)
+        except:
+            return 500, 'alert_data json 格式错误'
 
         sql = ''
 
         if str(state) == '3':
             color = 'red'
+            if alert_data == '""' or alert_data == 'null' or alert_data == None or alert_data == '':
+                alert_data = ''
+            else:
+                alert_data = str(alert_data)
             sql = "UPDATE drop_list_data SET alert='{}', state='{}', color='{}'" \
-                  "WHERE drop_list_data.id = {}".format(str(alert_data), state, color, id)
+                  "WHERE drop_list_data.id = {}".format(alert_data, state, color, id)
         elif str(state) == '1':
             color = 'green'
             sql = "UPDATE drop_list_data SET state='{}', color='{}'" \
@@ -229,7 +247,6 @@ class MysqlClass(BaseException):
             color = 'yellow'
             sql = "UPDATE drop_list_data SET state='{}', color='{}'" \
                   "WHERE drop_list_data.id = {}".format(state, color, id)
-
         cursor = connect.cursor()
 
         try:
@@ -248,6 +265,7 @@ class MysqlClass(BaseException):
     def edit_verification_gate(self, *args):
         id = args[0]
         verification_gate = args[1]
+        drop_name = ''
 
         connect = pymysql.Connect(
             host='47.103.66.5',
@@ -258,11 +276,32 @@ class MysqlClass(BaseException):
             charset='utf8'
         )
 
-        drop_name = json.loads(verification_gate)['groupNameDevice']
+        try:
+            if verification_gate == '""' or verification_gate == 'null' or verification_gate == None \
+                    or verification_gate == '':
+                pass
+            else:
+                drop_name = json.loads(verification_gate)['groupNameDevice']
+                verification_gate = {
+                    'unconnectedNumber': str(json.loads(verification_gate)['unconnectedNumber']),
+                    'updateTime': str(json.loads(verification_gate)['updateTime']),
+                    'ipTotal': str(json.loads(verification_gate)['ipTotal']),
+                    'groupNameDevice': str(json.loads(verification_gate)['groupNameDevice'])
+                }
+
+            verification_gate = json.dumps(verification_gate)
+        except:
+            return 500, 'verification_gate json 格式错误'
 
         cursor = connect.cursor()
+        if verification_gate == '""' or verification_gate == 'null' or verification_gate == None \
+                or verification_gate == '':
+            verification_gate = ''
+        else:
+            verification_gate = str(verification_gate)
+
         sql = "UPDATE drop_list_data SET bounced_content='{}',drop_name='{}'" \
-              "WHERE drop_list_data.id = {}".format(str(verification_gate), drop_name, id)
+              "WHERE drop_list_data.id = {}".format(verification_gate, drop_name, id)
         try:
             # 执行SQL语句
             print(sql)

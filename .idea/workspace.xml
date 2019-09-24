@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d15bc90b-1f0f-4cf5-ab7f-1cdf2aac82a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/jbh/backend.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/jbh/backend.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_update_vm_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_update_vm_task.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -130,6 +131,8 @@
       <workItem from="1568684084048" duration="5032000" />
       <workItem from="1568704763271" duration="2672000" />
       <workItem from="1569043558792" duration="2439000" />
+      <workItem from="1569223638016" duration="1111000" />
+      <workItem from="1569309936598" duration="3412000" />
     </task>
     <servers />
   </component>
@@ -164,6 +167,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1568706926608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1569313355765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
