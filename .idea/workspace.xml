@@ -4,7 +4,8 @@
     <list default="true" id="d15bc90b-1f0f-4cf5-ab7f-1cdf2aac82a0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_update_vm_task.py" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_update_vm_task.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/backend.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/backend.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/fronted.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fronted.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,14 +42,14 @@
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/main" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Administrator\Desktop\ciie\static\css" />
-      <recent name="C:\Users\luky\Desktop\ciie_data\templates" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Administrator\Desktop\ciie" />
       <recent name="C:\Users\Administrator\Desktop\ciie\templates" />
       <recent name="C:\Users\luky\Desktop\ciie_data" />
+      <recent name="C:\Users\luky\Desktop\ciie_data\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Administrator\Desktop\ciie\static\css" />
       <recent name="C:\Users\luky\Desktop\ciie_data\templates" />
     </key>
   </component>
@@ -104,8 +105,24 @@
   <component name="ServiceViewManager">
     <option name="allServicesViewState">
       <serviceView>
+        <option name="contentProportion" value="0.31752872" />
         <treeState>
-          <expand />
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@281bfaca" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@281bfaca" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@623c53fc" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@281bfaca" type="9fbbdea:ServiceModel$ServiceNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@2f7a4106" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+          </expand>
           <select />
         </treeState>
       </serviceView>
@@ -167,6 +184,6 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1569313355765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ciie_data$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1569389457737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -71,15 +71,9 @@
             </div>
         </div>
     </div>
-    <script>
-            var domain = window.location.host 
-            if(window.location.hostname == "127.0.0.1"){
-                domain = 'http://47.103.66.5:5000'
-            }
-        </script>
     <script src="../static/js/jbh/backend.js"></script>
     <script>
-        var domain = 'http://47.103.66.5:5000'
+        var domain = 'http://localhost:5000'
         var zr = zrender.init(document.getElementById('main'));
         function getData(speed){
             $.ajax({
@@ -103,7 +97,7 @@
            var batchTime = $('input[name="batchTime"]').val()
            var batchNum = $('input[name="batchNum"]').val()
            $.ajax({
-               url:'http://47.103.66.5:5000/edit_all_data?all_batch_speed='+batchTime+'&all_batch_num='+batchNum,
+               url:'http://localhost:5000/edit_all_data?all_batch_speed='+batchTime+'&all_batch_num='+batchNum,
                type:'get',
                success:function(result){
                  var res = JSON.parse(result)
@@ -149,7 +143,7 @@
         $('#delete').click(function(){
             var id = $('input[name="id"]').val()
             $.ajax({
-            url:'http://47.103.66.5:5000/mysql_delete_drop_data?id='+id,
+            url:'http://localhost:5000/mysql_delete_drop_data?id='+id,
             success:function(result){
                 var res = JSON.parse(result)
                 if(res.code=='200'){
