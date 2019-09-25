@@ -2,6 +2,7 @@ var zr = zrender.init(document.getElementById('main'));
 var g = new zrender.Group()
 var drawFunc = {
     speed:0,
+    domain:'',
     layerState:false,
     swiperGroup:new zrender.Group(),
     textGroup:new zrender.Group(),
@@ -162,7 +163,6 @@ var drawFunc = {
      * 
     */
     drawListPoint(list){
-        console.log('drawListPoint')
         var array = []
         for(var i=0;i<list.length;i++){
             this.createPoint(list[i],i)
@@ -176,27 +176,41 @@ var drawFunc = {
             $('.swiper-container').remove()
         }
     },
+    // 数学计算
+    sqrt1:function(x,y,cx,cy){
+        var z = Math.sqrt(x*x+y*y);
+        var cz = Math.sqrt(cx*cx+cy*cy);
+        var r = (z/cz*100).toFixed(2)
+        console.log(r)
+        return r/100
+    },
     /** 
      *  计算贝塞尔控制点
      * */ 
     computeBC:function(x1,y1){
         var center = [957,440]
-        var q1 = x1+100
-        var q2 = y1/2
-        
-        if(x1<957&&y1<440){
-            q1 = (957-x1)/2+x1
-            q2 = y1-200
-        }else if(x1<957&&y1>=440){
-            q1 = (957-x1)/2+x1
-            q2 = y1-250
-        }else if(x1>=957&&y1<440){
-            q1 = (957-x1)/2+x1
-            q2 = 400
-        }else{
-            q1 = (957-x1)/2+x1
-            q2 = y1-250
+        var cx = 957
+        var cy = 440
+        var q1 = (x1+cx)/2
+        var q2 = (y1+cy)/2 -200
+        if(x1>cx*4/5&&x1<6*cx/5){
+            q2 = (y1+cy)/2 - 20
+            console.log(x1,cx*2/3,'1')
         }
+        if(y1>cy*4/5&&y1<6*cy/5){
+            q2 = (y1+cy)/2 - 20
+        }
+        // if(x1<cx&&y1<cy){ //第一象限
+        //     q2= q2-30
+        // }else if(x1<957&&y1>=440){ //第二象限
+        //     q2 = q2-30
+        // }else if(x1>=957&&y1<440){ //第三象限
+        //     q1 = (x1+cx)/2
+        //     q2 = y1
+        // }else{ //第四象限
+        //     q1 = (x1+cx)/2
+        //     q2 = y1-100
+        // }
         return [q1,q2]
     },
     /** 
