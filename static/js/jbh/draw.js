@@ -192,13 +192,12 @@ var drawFunc = {
         var cx = 957
         var cy = 440
         var q1 = (x1+cx)/2
-        var q2 = (y1+cy)/2 -200
+        var q2 = (y1+cy)/2 -100
         if(x1>cx*4/5&&x1<6*cx/5){
-            q2 = (y1+cy)/2 - 20
-            console.log(x1,cx*2/3,'1')
+            q2 = (y1+cy)/2 - 30
         }
         if(y1>cy*4/5&&y1<6*cy/5){
-            q2 = (y1+cy)/2 - 20
+            q2 = (y1+cy)/2 - 30
         }
         // if(x1<cx&&y1<cy){ //第一象限
         //     q2= q2-30
@@ -302,8 +301,6 @@ var drawFunc = {
             var str = JSON.stringify(list[i].data.alert)
             var newStr = str.replace(/(\\r\\n)/g,"");
             var jsonObj = JSON.parse(JSON.parse(newStr))
-            console.log(list)
-            console.log(jsonObj.deviceName)
             html+=`<div class="swiper-slide">
                 <section>
                 <p>设备名称：${jsonObj['deviceName']?jsonObj['deviceName']:""} <span>${jsonObj['alarmTime']?jsonObj['alarmTime']:''}</span> </p>
