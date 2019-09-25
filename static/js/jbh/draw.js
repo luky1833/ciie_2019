@@ -181,7 +181,6 @@ var drawFunc = {
         var z = Math.sqrt(x*x+y*y);
         var cz = Math.sqrt(cx*cx+cy*cy);
         var r = (z/cz*100).toFixed(2)
-        console.log(r)
         return r/100
     },
     /** 
