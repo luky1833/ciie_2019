@@ -57,7 +57,7 @@ class MysqlClass(BaseException):
         drop_name = args[6]
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -92,7 +92,7 @@ class MysqlClass(BaseException):
         state = args[5]
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -122,7 +122,7 @@ class MysqlClass(BaseException):
         id = args[0]
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -147,7 +147,7 @@ class MysqlClass(BaseException):
 
     def get_all_data(self):
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -177,7 +177,7 @@ class MysqlClass(BaseException):
         all_batch_speed = args[1]
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -207,7 +207,7 @@ class MysqlClass(BaseException):
         alert_data = args[2]
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -268,7 +268,7 @@ class MysqlClass(BaseException):
         drop_name = ''
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -318,7 +318,7 @@ class MysqlClass(BaseException):
     def get_drop_id_name(self, *args):
 
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',

@@ -58,7 +58,7 @@
     z-index: 99999;
 }
 .swiper-slide{
-    background-image: url(../images/jbh/worn.PNG);
+    background-image: url(../images/jbh/worn.png);
     background-size: 100% 100%;
     cursor: pointer;
 }
