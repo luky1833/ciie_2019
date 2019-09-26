@@ -9,7 +9,7 @@ class MysqlClass(BaseException):
     def get_drop_list_data(self, *args):
         batch = args[0]
         connect = pymysql.Connect(
-            host='47.103.66.5',
+            host='ciie.mysql.db',
             port=33890,
             user='root',
             passwd='ViewSonic123$%^',
@@ -225,7 +225,7 @@ class MysqlClass(BaseException):
                     'alarmContent': str(json.loads(alert_data)['alarmContent'])
                 }
 
-            alert_data = json.dumps(alert_data)
+            alert_data = json.dumps(alert_data, ensure_ascii=False)
         except:
             return 500, 'alert_data json 格式错误'
 
@@ -289,7 +289,7 @@ class MysqlClass(BaseException):
                     'groupNameDevice': str(json.loads(verification_gate)['groupNameDevice'])
                 }
 
-            verification_gate = json.dumps(verification_gate)
+            verification_gate = json.dumps(verification_gate, ensure_ascii=False)
         except:
             return 500, 'verification_gate json 格式错误'
 
