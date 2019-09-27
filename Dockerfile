@@ -1,4 +1,6 @@
 FROM py:36
+# 设置docker 默认编码
+ENV LANG en_US.utf8
 
 # Set the working directory to /app
 WORKDIR /opt/ciie_data
