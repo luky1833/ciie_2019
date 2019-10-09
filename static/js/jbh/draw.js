@@ -31,6 +31,7 @@ var drawFunc = {
         var _this = this
         var speed = p.drop_radiation_speed != 0 ? p.drop_radiation_speed : 20
         var color = p.color
+        var name = p.drop_name
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]
         var line = this.drawLine({
@@ -66,8 +67,6 @@ var drawFunc = {
             z: 999
         })
         text.hide()
-        this.textGroup.add(text)
-        zr.add(text)
         g.add(line)
         zr.add(line)
         var point = new zrender.Image({
@@ -82,8 +81,7 @@ var drawFunc = {
                 height: 37,
             },
             onmouseover: function (e) {
-                text.show()
-                _this.textGroup.childAt(index).show()
+                _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name)
                 this.attr({
                     position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1.1, 1.1],
@@ -94,6 +92,7 @@ var drawFunc = {
 
             },
             onmouseout: function (e) {
+                $('.droplayer').hide()
                 this.attr({
                     position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1, 1],
@@ -101,12 +100,9 @@ var drawFunc = {
                         image: '../../static/images/jbh/' + color + '.png',
                     }
                 })
-                text.hide()
-                _this.textGroup.childAt(index).hide()
             },
             onmouseup: function (e) {
                 $('.swiper-container').show()
-                _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
@@ -116,14 +112,12 @@ var drawFunc = {
                         cpy1: _this.computeBC(e.target.position[1] * 1 + 12, e.target.position[1] * 1 + 22)[1],
                     }
                 })
-                _this.textGroup.childAt(index).attr({
-                    position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                })
+                // _this.textGroup.childAt(index).attr({
+                //     position: [e.target.position[0] * 1 + 25, e.target.position[1]]
+                // })
             },
             ondragend: function (e) {
-
                 $('.swiper-container').show()
-                _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
@@ -133,19 +127,20 @@ var drawFunc = {
                         cpy1: _this.computeBC(e.target.position[1] * 1 + 12, e.target.position[1] * 1 + 22)[1],
                     }
                 })
-                _this.textGroup.childAt(index).attr({
-                    position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                })
+                // _this.textGroup.childAt(index).attr({
+                //     position: [e.target.position[0] * 1 + 25, e.target.position[1]]
+                // })
             },
             ondrag: function () {
+                $('.droplayer').hide()
                 $('.swiper-container').hide()
             },
             onmousedown: function () {
                 //$('.swiper-container').hide()
                 g.childAt(index).hide()
-                _this.textGroup.childAt(index).hide()
             },
             onclick: function (e) {
+                $('.droplayer').hide()
                 _this.computeLayer(e.target.position, p)
             },
             cursor: 'pointer',
@@ -224,6 +219,34 @@ var drawFunc = {
         return line
     },
     /** 
+     * 计算
+     * */ 
+    computeDropLayer:function(position, name){
+            var lx = position[0]
+            var ly = position[1]
+            var x = lx * 1 + 12;
+            var y = ly * 1 + 22
+            if (lx >= 1920 - 400 && y < 1080 - 150) {
+                x = lx - 250 - 12;
+                y = ly + 22
+            } else if (lx >= 1920 - 400 && ly >= 1080 - 150) {
+                x = lx - 250 - 12
+                y = ly - 150 - 22
+            } else if (lx < 1920 - 400 && ly >= 1080 - 150) {
+                x = lx + 12
+                y = ly - 150
+            } else {
+                x = lx * 1 + 12;
+                y = ly * 1 + 22
+            }
+            $('.dropname').text(name)
+            $('.droplayer').css({
+                'left': x+35,
+                'top': y-20
+            })
+            $('.droplayer').fadeIn(200)
+    },
+    /** 
      * 计算弹窗位置 （250*150）
     */
     computeLayer: function (position, obj, index) {
@@ -266,6 +289,22 @@ var drawFunc = {
             })
         }
         
+    },
+    /** 
+     * 创建文字弹窗
+     * 
+     * */ 
+    createDropLayer:function(){
+        var html = `<div class="droplayer" style="display:none;">
+        <p>名称:<span class="dropname"></span></p>
+    </div>`
+        $('.container').append(html)
+        $('#main').click(function (e) {
+            e.stopPropagation()
+        })
+        $('.layerMask').click(function () {
+            $('.layerMask').fadeOut(200)
+        })
     },
     /** 
      * 创建弹窗
@@ -366,6 +405,7 @@ var drawFunc = {
         this.createDashedLine()
         // this.createCenterPoint()
         this.createLayer()
+        this.createDropLayer()
         this.drawListPoint(list)
     }
 }

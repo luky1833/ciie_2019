@@ -28,9 +28,10 @@ var drawFunc = {
      *******/
     createPoint: function (p, index) {
         var _this = this
-        var isDrag = false
         var speed = p.drop_radiation_speed != 0 ? p.drop_radiation_speed : 20
         var color = p.color
+        var name  = p.drop_name
+        var ID = p.id
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]
         var line = this.drawLine({
@@ -67,9 +68,6 @@ var drawFunc = {
                 last = 0.001
             }
         }, speed)
-        text.hide()
-        this.textGroup.add(text)
-        zr.add(text)
         g.add(line)
         zr.add(line)
         line.animate('style', true)
@@ -89,53 +87,24 @@ var drawFunc = {
                 height: 37,
             },
             onmouseover: function (e) {
+                _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
                 this.attr({
-                    position: [e.target.position[0] * 1 - 6, e.target.position[1] * 1 - 6],
+                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1.1, 1.1],
                     style: {
                         image: '../../static/images/jbh/' + color + '_active.png',
                     }
                 })
-                _this.textGroup.childAt(index).show()
             },
             onmouseout: function (e) {
+                $('.droplayer').hide()
                 this.attr({
-                    position: [e.target.position[0] * 1 + 6, e.target.position[1] * 1 + 6],
+                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1, 1],
                     style: {
                         image: '../../static/images/jbh/' + color + '.png',
-    
                     }
                 })
-                _this.textGroup.childAt(index).hide()
-                _this.textGroup.childAt(index).hide()
-            },
-            onmouseleave: function (e) {
-                _this.textGroup.childAt(index).show()
-                g.childAt(index).show()
-                g.childAt(index).attr({
-                    shape: {
-                        x1: e.target.position[0] * 1 + 12,
-                        y1: e.target.position[1] * 1 + 22
-                    }
-                })
-                $('input[name="x"]').val(e.target.position[0])
-                $('input[name="y"]').val(e.target.position[1])
-                _this.textGroup.childAt(index).attr({
-                    position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                })
-                var site = [e.target.position[0], e.target.position[1]].join(',')
-                if (p.id) {
-                    $.ajax({
-                        url: domain+'/mysql_update_drop_data?site=' + site + '&batch=' + p.batch + '&state=' + p.state + '&drop_name=' + p.drop_name + '&drop_radiation_speed=' + p.drop_radiation_speed + '&color=' + p.color + '&id=' + p.id,
-                        success: function (result) {
-                            var res = JSON.parse(result)
-                            if (res.code == '200') {
-                                //window.location.reload()
-                            }
-                        }
-                    })
-                }
             },
             onmouseup: function (e) {
                 _this.textGroup.childAt(index).show()
@@ -148,19 +117,14 @@ var drawFunc = {
                 })
                 $('input[name="x"]').val(e.target.position[0])
                 $('input[name="y"]').val(e.target.position[1])
-                _this.textGroup.childAt(index).attr({
-                    position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                })
                 var site = [e.target.position[0], e.target.position[1]].join(',')
 
             },
             onmousedown: function () {
                 isDrag = true
                 g.childAt(index).hide()
-                _this.textGroup.childAt(index).hide()
             },
             ondragend: function (e) {
-                _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
@@ -168,12 +132,8 @@ var drawFunc = {
                         y1: e.target.position[1] * 1 + 22
                     }
                 })
-                console.log(p.id,)
                 $('input[name="x"]').val(e.target.position[0])
                 $('input[name="y"]').val(e.target.position[1])
-                _this.textGroup.childAt(index).attr({
-                    position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                })
                 var site = [e.target.position[0], e.target.position[1]].join(',')
                 if (p.id) {
                     $.ajax({
@@ -186,6 +146,9 @@ var drawFunc = {
                         }
                     })
                 }
+            },
+            ondrag: function () {
+                $('.droplayer').hide()
             },
             onclick: function (e) {
                 $('.box').show()
@@ -297,6 +260,53 @@ var drawFunc = {
         $('.layerMask').fadeIn(200)
         this.layerState = true
     },
+    /** 
+     * 计算
+     * */ 
+    computeDropLayer:function(position, name,id){
+        var lx = position[0]
+        var ly = position[1]
+        var x = lx * 1 + 12;
+        var y = ly * 1 + 22
+        if (lx >= 1920 - 400 && y < 1080 - 150) {
+            x = lx - 250 - 12;
+            y = ly + 22
+        } else if (lx >= 1920 - 400 && ly >= 1080 - 150) {
+            x = lx - 250 - 12
+            y = ly - 150 - 22
+        } else if (lx < 1920 - 400 && ly >= 1080 - 150) {
+            x = lx + 12
+            y = ly - 150
+        } else {
+            x = lx * 1 + 12;
+            y = ly * 1 + 22
+        }
+        $('.dropname').text(name)
+        $('.dropid').text(id)
+        $('.droplayer').css({
+            'left': x+35,
+            'top': y-20
+        })
+        $('.droplayer').fadeIn(200)
+},
+/** 
+     * 创建文字弹窗
+     * 
+     * */ 
+    createDropLayer:function(){
+        var html = `<div class="droplayer" style="display:none;">
+        <p>名称:<span class="dropname"></span>，ID:<span class="dropid"></span>
+        
+        </p>
+    </div>`
+        $('.container').append(html)
+        $('#main').click(function (e) {
+            e.stopPropagation()
+        })
+        $('.layerMask').click(function () {
+            $('.layerMask').fadeOut(200)
+        })
+    },
     /**
      * 创建弹窗
      * */
@@ -385,6 +395,7 @@ var drawFunc = {
         g.removeAll()
         this.swiperGroup.removeAll()
         zr.clear()
+        this.createDropLayer()
         this.createDashedLine()
         //this.createCenterPoint()
         this.createLayer()

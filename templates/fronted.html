@@ -34,7 +34,7 @@
             var h = date.getHours()
             var m = date.getMinutes()
             var s = date.getSeconds()
-            $('.date').html(`${year}年${month}月${day}日 <span>${format(h)}:${format(m)}:${format(s)}</span>`)
+            $('.date').html(`${year}-${month}-${day} <span>${format(h)}:${format(m)}:${format(s)}</span>`)
         }
        getDate()
        setInterval(function(){
