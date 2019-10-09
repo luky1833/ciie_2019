@@ -85,17 +85,15 @@ var drawFunc = {
                 image: '../../static/images/jbh/' + color + '.png',
                 x: 0,
                 y: 0,
-                width: 16,
-                height: 22,
+                width: 39,
+                height: 37,
             },
             onmouseover: function (e) {
                 this.attr({
                     position: [e.target.position[0] * 1 - 6, e.target.position[1] * 1 - 6],
-                    scale: [1.2, 1.2],
+                    scale: [1.1, 1.1],
                     style: {
                         image: '../../static/images/jbh/' + color + '_active.png',
-                        width: 20,
-                        height: 27,
                     }
                 })
                 _this.textGroup.childAt(index).show()
@@ -106,8 +104,7 @@ var drawFunc = {
                     scale: [1, 1],
                     style: {
                         image: '../../static/images/jbh/' + color + '.png',
-                        width: 16,
-                        height: 22,
+    
                     }
                 })
                 _this.textGroup.childAt(index).hide()
@@ -225,24 +222,18 @@ var drawFunc = {
      *  计算贝塞尔控制点
      * */
     computeBC: function (x1, y1) {
-        var center = [957, 440]
-        var q1 = x1 + 100
-        var q2 = y1 / 2
-
-        if (x1 < 957 && y1 < 440) {
-            q1 = (957 - x1) / 2 + x1
-            q2 = y1 - 200
-        } else if (x1 < 957 && y1 >= 440) {
-            q1 = (957 - x1) / 2 + x1
-            q2 = y1 - 250
-        } else if (x1 >= 957 && y1 < 440) {
-            q1 = (957 - x1) / 2 + x1
-            q2 = 400
-        } else {
-            q1 = (957 - x1) / 2 + x1
-            q2 = y1 - 250
+        var center = [950,470]
+        var cx = 950
+        var cy = 470
+        var q1 = (x1+cx)/2
+        var q2 = (y1+cy)/2 -100
+        if(x1>cx*4/5&&x1<6*cx/5){
+            q2 = (y1+cy)/2 - 30
         }
-        return [q1, q2]
+        if(y1>cy*4/5&&y1<6*cy/5){
+            q2 = (y1+cy)/2 - 30
+        }
+        return [q1,q2]
     },
     /**
      * 绘制动态射线
@@ -264,8 +255,8 @@ var drawFunc = {
                 lineWidth: 1,
             },
             shape: {
-                x2: 945 + 12,
-                y2: 400 + 30,
+                x2: 950,
+                y2: 470,
                 x1: (points.x * 1 + 6),
                 y1: (points.y * 1 + 22),
                 cpx1: _this.computeBC(points.x * 1 + 6, points.y * 1 + 22)[0],
@@ -364,15 +355,38 @@ var drawFunc = {
         $('input[name="speed"]').val(p.drop_radiation_speed)
         this.createPoint(p, index)
     },
-    /**
-     *  删除点位
-     * */
+    /** 
+     * 
+     * 中心点运动点虚线
+    */
+   createDashedLine(){
+    var points = [[990,505],[1029,551],[1055,581],[1077,614],[1121,688],[1147,742],[1174,816],[1219,1040]];
+    var polyline = new zrender.Polyline({
+        style: {
+            lineDash: [10, 10],
+            stroke: 'rgba(226, 232, 133, 0.8)',
+            lineWidth: 20
+        },
+        shape: {
+            points: points.reverse(),
+            smooth: 0.3
+        },
+        z:2
+    });
+    zr.add(polyline);
+    polyline.animate('style', true)
+        .when(1000, {
+            lineDashOffset: 20
+        })
+        .start();
+},
     init: function (list) {
         var _this = this
         g.removeAll()
         this.swiperGroup.removeAll()
         zr.clear()
-        this.createCenterPoint()
+        this.createDashedLine()
+        //this.createCenterPoint()
         this.createLayer()
         this.drawListPoint(list)
         $('#create').click(function () {
