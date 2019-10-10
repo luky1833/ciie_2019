@@ -107,7 +107,6 @@ var drawFunc = {
                 })
             },
             onmouseup: function (e) {
-                _this.textGroup.childAt(index).show()
                 g.childAt(index).show()
                 g.childAt(index).attr({
                     shape: {
