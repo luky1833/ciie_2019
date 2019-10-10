@@ -83,6 +83,7 @@
         * 轮询查数据
         */ 
         var batch = 0
+        getData(1)
        $.ajax({
            url:domain+'/get_all_data',
            type:'get',
@@ -91,22 +92,21 @@
                 if(res.code=='200'){
                     var batchNum = res.data.all_batch_num
                     var batchTime = res.data.all_batch_speed
-                    //var batch = 1
+                    var count =0 
+                    var batch = 1
                     getData(1)
-                    var reflashFirst = setInterval(()=>{
-                        getData(1)
-                    },2000)
                     var timer = setInterval(function(){
-                        clearInterval(reflashFirst)
-                        batch++
-                        reflashFirst = setInterval(()=>{
-                            getData(batch+1)
-                        },2000)
-                        getData(batch)
-                        if(batch>=batchNum){
-                            batch=0
+                        count+=2
+                        if(count>=batchTime){
+                            count = 0
+                            batch++
+                            if(batch>batchNum*1){
+                                batch=1
+                            }
                         }
-                    },batchTime*1000)
+                        getData(batch)
+                        
+                    },2000)
                 }
            }
        })

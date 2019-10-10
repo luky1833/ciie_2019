@@ -66,7 +66,6 @@ var drawFunc = {
             },
             z: 999
         })
-        text.hide()
         g.add(line)
         zr.add(line)
         var point = new zrender.Image({
