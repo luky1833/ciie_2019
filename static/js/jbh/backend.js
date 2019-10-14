@@ -69,7 +69,7 @@ var drawFunc = {
             }
         }, speed)
         g.add(line)
-        zr.add(line)
+        //zr.add(line)
         line.animate('style', true)
             .when(1000, {
                 lineDashOffset: -20
@@ -83,8 +83,8 @@ var drawFunc = {
                 image: '../../static/images/jbh/' + color + '.png',
                 x: 0,
                 y: 0,
-                width: 39,
-                height: 37,
+                width: 31,
+                height: 33,
             },
             onmouseover: function (e) {
                 _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
@@ -395,7 +395,7 @@ var drawFunc = {
         this.swiperGroup.removeAll()
         zr.clear()
         this.createDropLayer()
-        this.createDashedLine()
+        //this.createDashedLine()
         //this.createCenterPoint()
         this.createLayer()
         this.drawListPoint(list)

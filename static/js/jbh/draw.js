@@ -67,7 +67,7 @@ var drawFunc = {
             z: 999
         })
         g.add(line)
-        zr.add(line)
+        //zr.add(line)
         var point = new zrender.Image({
             z: 999,
             position: [x, y],
@@ -76,8 +76,8 @@ var drawFunc = {
                 image: '../../static/images/jbh/' + color + '.png',
                 x: 0,
                 y: 0,
-                width: 39,
-                height: 37,
+                width: 31,
+                height: 33,
             },
             onmouseover: function (e) {
                 _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name)
@@ -401,7 +401,7 @@ var drawFunc = {
         g.removeAll()
         this.swiperGroup.removeAll()
         zr.clear()
-        this.createDashedLine()
+        //this.createDashedLine()
         // this.createCenterPoint()
         this.createLayer()
         this.createDropLayer()
