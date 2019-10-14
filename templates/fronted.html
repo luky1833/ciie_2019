@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
 
     <title></title>
 </head>
+
 <body>
     <p class="date"></p>
     <div class="container">
@@ -22,102 +24,106 @@
                 <div id="main" style="width:100%;height:100%;"></div>
             </div>
         </div>
-        
+
     </div>
     <script>
         var domain = ''
-        function format(n){
-            var str = n+''
-            str = str.length>1?str:'0'+str
+
+        function format(n) {
+            var str = n + ''
+            str = str.length > 1 ? str : '0' + str
             return str
         }
-        function getDate(){
+
+        function getDate() {
             var date = new Date()
             var year = date.getFullYear()
-            var month = date.getMonth()+1
+            var month = date.getMonth() + 1
             var day = date.getDate()
             var h = date.getHours()
             var m = date.getMinutes()
             var s = date.getSeconds()
             $('.date').html(`${year}-${month}-${day} <span>${format(h)}:${format(m)}:${format(s)}</span>`)
         }
-       getDate()
-       setInterval(function(){
-           getDate()
-       },1000)
+        getDate()
+        setInterval(function() {
+            getDate()
+        }, 1000)
     </script>
     <script src="../static/js/jbh/draw.js"></script>
     <script>
         var arrString = []
         $.ajax({
-           url:domain+'/get_all_data',
-           type:'get',
-           success:function(result){
+            url: domain + '/get_all_data',
+            type: 'get',
+            success: function(result) {
                 var res = JSON.parse(result)
-                if(res.code=='200'){
+                if (res.code == '200') {
                     var batchTime = res.data.all_batch_speed
                     //getData(1)
                 }
-           }
-       })
-        function getData(batch,speed){
+            }
+        })
+
+        function getData(batch, speed) {
             $.ajax({
-            url:domain+'/get_drop_list_data?batch='+batch,
-            type:'get',
-            success:function(result){
+                url: domain + '/get_drop_list_data?batch=' + batch,
+                type: 'get',
+                success: function(result) {
                     var res = JSON.parse(result)
-                    if(res.code=='200'){
-                        if(arrString.length!=0){
-                            if(JSON.stringify(arrString)!=JSON.stringify(res.data)){
+                    if (res.code == '200') {
+                        if (arrString.length != 0) {
+                            if (JSON.stringify(arrString) != JSON.stringify(res.data)) {
                                 $('.layerMask').hide()
                                 $('.swiper-container').remove()
                                 drawFunc.init(res.data)
                                 arrString = res.data
-                            }     
-                        }else{
+                            }
+                        } else {
                             drawFunc.init(res.data)
                             arrString = res.data
-                        } 
-                    }else{
+                        }
+                    } else {
                         alert(res.message)
                     }
                 }
             })
         }
         /*
-        * 轮询查数据
-        */ 
+         * 轮询查数据
+         */
         var batch = 0
-       $.ajax({
-           url:domain+'/get_all_data',
-           type:'get',
-           success:function(result){
+        $.ajax({
+            url: domain + '/get_all_data',
+            type: 'get',
+            success: function(result) {
                 var res = JSON.parse(result)
-                if(res.code=='200'){
+                if (res.code == '200') {
                     var batchNum = res.data.all_batch_num
                     var batchTime = res.data.all_batch_speed
-                    var count =0     
+                    var count = 0
                     var batch = 1
                     getData(1)
-                    var timer = setInterval(function(){
-                        count+=2
-                        if(count>=batchTime){
+                    var timer = setInterval(function() {
+                        count += 2
+                        if (count >= batchTime) {
                             count = 0
                             batch++
-                            if(batch>batchNum*1){
-                                batch=1
+                            if (batch > batchNum * 1) {
+                                batch = 1
                                 window.location.reload()
                             }
                         }
                         getData(batch)
-                        
-                    },2000)
+
+                    }, 2000)
                 }
-           }
-       })
-       setTimeout(()=>{
-        window.location.reload()
-       },60*1000)
+            }
+        })
+        setTimeout(() => {
+            window.location.reload()
+        }, 60 * 1000)
     </script>
 </body>
+
 </html>
