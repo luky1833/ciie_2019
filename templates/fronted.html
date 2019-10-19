@@ -75,6 +75,7 @@
                         if (arrString.length != 0) {
                             if (JSON.stringify(arrString) != JSON.stringify(res.data)) {
                                 $('.layerMask').hide()
+                                $('.mask').remove()
                                 $('.swiper-container').remove()
                                 drawFunc.init(res.data)
                                 arrString = res.data

@@ -38,6 +38,16 @@ var drawFunc = {
             x: x,
             y: y
         }, color)
+        if(p.color=='yellow'||p.color=='red'){
+            var id = p.id
+            var c = p.color=='red'?'r':'y'
+            var id = (id+'').toString().length>1?id:'0'+id
+            var url = '../../static/images/jbh/'+id + c +'.gif'
+            if(!$('#point'+id).html()){
+                $('.gif').prepend(`<div class="mask" id="point${id}" style="background:url(${url})"></div>`)
+            }
+           
+        }
         var text = new zrender.Text({
             position: [x * 1 + 25, y],
             style: {

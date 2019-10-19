@@ -32,6 +32,16 @@ var drawFunc = {
         var speed = p.drop_radiation_speed != 0 ? p.drop_radiation_speed : 20
         var color = p.color
         var name = p.drop_name
+        if(p.color=='yellow'||p.color=='red'){
+            var id = p.id
+            var c = p.color=='red'?'r':'y'
+            var id = (id+'').toString().length>1?id:'0'+id
+            var url = '../../static/images/jbh/'+id + c +'.gif'
+            if(!$('#point'+id).html()){
+                $('.gif').prepend(`<div class="mask" id="point${id}" style="background:url(${url})"></div>`)
+            }
+           
+        }
         var x = p.site.split(',')[0]
         var y = p.site.split(',')[1]
         var line = this.drawLine({
