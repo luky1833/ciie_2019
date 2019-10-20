@@ -35,6 +35,7 @@ body{
     padding:0 15px;
     top:0;
     left: 0;
+    z-index: 999999;
 }
 .droplayer{
     width: auto!important;
@@ -202,5 +203,18 @@ input{
     position: absolute;
     top: 0%;
     left: 0;
-    z-index: 8889;
+    z-index: 8;
+}
+.maskBg{
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    position: absolute;
+    top: 0%;
+    left: 0;
+    z-index:9999;
+}
+#main{
+    position: relative;
+    z-index: 999999;
 }

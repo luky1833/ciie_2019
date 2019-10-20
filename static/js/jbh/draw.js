@@ -14,7 +14,7 @@ var drawFunc = {
                 x: 855,
                 y: 430,
             },
-            z: 1
+            z: 999
         })
         zr.add(point)
     },
@@ -223,7 +223,7 @@ var drawFunc = {
                 cpx1: _this.computeBC(points.x * 1 + 6, points.y * 1 + 22)[0],
                 cpy1: _this.computeBC(points.x * 1 + 6, points.y * 1 + 22)[1]
             },
-            z: 9
+            z: 999
         });
         return line
     },
@@ -398,7 +398,7 @@ var drawFunc = {
                 points: points.reverse(),
                 smooth: 0.3
             },
-            z: 2
+            z: 999
         });
         zr.add(polyline);
         polyline.animate('style', true)
