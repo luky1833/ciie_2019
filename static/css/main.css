@@ -193,14 +193,14 @@ input{
 
 .line{
     /* background-image: url(../images/jbh/7-110.gif); */
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1080px;
     z-index: 99999;
     position: relative;
 } 
 .mask{
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1080px;
     background-size: 100% 100%;
     position: absolute;
     top: 0%;
@@ -208,8 +208,8 @@ input{
     z-index: 8;
 }
 .maskBg{
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1080px;
     background-size: 100% 100%;
     position: absolute;
     top: 0%;

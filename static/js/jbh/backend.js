@@ -93,14 +93,14 @@ var drawFunc = {
                 image: '../../static/images/jbh/' + color + '.png',
                 x: 0,
                 y: 0,
-                width: 31,
-                height: 33,
+                width: 20,
+                height: 18,
             },
             onmouseover: function (e) {
                 _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
                 this.attr({
                     position: [e.target.position[0] * 1, e.target.position[1] * 1],
-                    scale: [1.1, 1.1],
+                    scale: [1.5, 1.5],
                     style: {
                         image: '../../static/images/jbh/' + color + '_active.png',
                     }
