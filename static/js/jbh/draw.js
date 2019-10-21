@@ -29,6 +29,7 @@ var drawFunc = {
      *******/
     createPoint: function (p, index) {
         var _this = this
+        var clickFlag= false
         var speed = p.drop_radiation_speed != 0 ? p.drop_radiation_speed : 20
         var color = p.color
         var name = p.drop_name
@@ -92,7 +93,7 @@ var drawFunc = {
             onmouseover: function (e) {
                 _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name)
                 this.attr({
-                    position: [e.target.position[0] * 1 -12, e.target.position[1] * 1-12],
+                    position: [e.target.position[0] * 1 -12, e.target.position[1] * 1 -12],
                     scale: [1, 1],
                     style: {
                         image: '../../static/images/jbh/' + color + '_active.png',
@@ -104,15 +105,23 @@ var drawFunc = {
             },
             onmouseout: function (e) {
                 $('.droplayer').hide()
-                this.attr({
-                    position: [e.target.position[0] * 1+12, e.target.position[1] * 1+12],
-                    scale: [1, 1],
-                    style: {
-                        image: '../../static/images/jbh/' + color + '.png',
-                        width: 20,
-                        height: 18,
-                    }
-                })
+                if(clickFlag){
+                    this.attr({
+                        scale: [1, 1],
+                    })
+                    clickFlag = false
+                }else{
+                    this.attr({
+                        position: [e.target.position[0] * 1+12, e.target.position[1] * 1+12],
+                        scale: [1, 1],
+                        style: {
+                            image: '../../static/images/jbh/' + color + '.png',
+                            width: 20,
+                            height: 18,
+                        }
+                    })
+                }
+                
             },
             onmouseup: function (e) {
                 $('.swiper-container').show()
@@ -153,12 +162,14 @@ var drawFunc = {
                 g.childAt(index).hide()
             },
             onclick: function (e) {
+                clickFlag = true
                 $('.droplayer').hide()
                 _this.computeLayer(e.target.position, p)
                 this.attr({
+                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1, 1],
                     style: {
-                        image: '../../static/images/jbh/' + color + '.png',
+                        image: '../../static/images/jbh/' + color + '_active.png',
                         width: 35,
                         height: 34,
                     }

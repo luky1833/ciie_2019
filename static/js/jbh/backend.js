@@ -1,6 +1,7 @@
 var zr = zrender.init(document.getElementById('main'));
 var g = new zrender.Group()
 var drawFunc = {
+    
     speed: 0,
     layerState: false,
     swiperGroup: new zrender.Group(),
@@ -27,6 +28,7 @@ var drawFunc = {
      *
      *******/
     createPoint: function (p, index) {
+        var clickFlag =false
         var _this = this
         var speed = p.drop_radiation_speed != 0 ? p.drop_radiation_speed : 20
         var color = p.color
@@ -99,22 +101,33 @@ var drawFunc = {
             onmouseover: function (e) {
                 _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
                 this.attr({
-                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
-                    scale: [1.5, 1.5],
+                    position: [e.target.position[0] * 1-12, e.target.position[1] * 1-12],
+                    scale: [1, 1],
                     style: {
                         image: '../../static/images/jbh/' + color + '_active.png',
+                        width: 35,
+                        height: 34,
                     }
                 })
             },
             onmouseout: function (e) {
                 $('.droplayer').hide()
-                this.attr({
-                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
-                    scale: [1, 1],
-                    style: {
-                        image: '../../static/images/jbh/' + color + '.png',
-                    }
-                })
+                if(clickFlag){
+                    this.attr({
+                        scale: [1, 1],
+                    })
+                    clickFlag = false
+                }else{
+                    this.attr({
+                        position: [e.target.position[0] * 1+12, e.target.position[1] * 1+12],
+                        scale: [1, 1],
+                        style: {
+                            image: '../../static/images/jbh/' + color + '.png',
+                            width: 20,
+                            height: 18,
+                        }
+                    })
+                }
             },
             onmouseup: function (e) {
                 g.childAt(index).show()
@@ -160,6 +173,7 @@ var drawFunc = {
                 $('.droplayer').hide()
             },
             onclick: function (e) {
+                clickFlag = true
                 $('.box').show()
                 $('#delete').show()
                 $('select[name="state"]').val(p.state)
@@ -168,6 +182,15 @@ var drawFunc = {
                 $('input[name="drop_name"]').val(p.drop_name ? p.drop_name : 0)
                 $('input[name="id"]').val(p.id ? p.id : '')
                 // _this.computeLayer(e.target.position,p)
+                this.attr({
+                    position: [e.target.position[0] * 1, e.target.position[1] * 1],
+                    scale: [1, 1],
+                    style: {
+                        image: '../../static/images/jbh/' + color + '_active.png',
+                        width: 35,
+                        height: 34,
+                    }
+                })
 
             },
             cursor: 'pointer',
