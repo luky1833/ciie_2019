@@ -273,13 +273,13 @@ var drawFunc = {
         var ly = position[1]
         var x = lx * 1 + 12;
         var y = ly * 1 + 22
-        if (lx >= 1920 - 400 && y < 1080 - 150) {
-            x = lx - 350 - 12;
+        if (lx >= 1920 - 250 && y < 1080 - 150) {
+            x = lx - 250 - 12;
             y = ly + 22
-        } else if (lx >= 1920 - 400 && ly >= 1080 - 150) {
-            x = lx - 350 - 12
+        } else if (lx >= 1920 - 250 && ly >= 1080 - 150) {
+            x = lx - 250 - 12
             y = ly - 150 - 22
-        } else if (lx < 1920 - 400 && ly >= 1080 - 150) {
+        } else if (lx < 1920 - 250 && ly >= 1080 - 150) {
             x = lx + 12
             y = ly - 150
         } else {
@@ -306,17 +306,17 @@ var drawFunc = {
         var x = lx * 1 + 12;
         var y = ly * 1 + 22
         if (lx >= 1920 - 400 && y < 1080 - 150) {
-            x = lx - 160 - 12;
-            y = ly + 10
+            x = lx - 250 - 12;
+            y = ly + 22
         } else if (lx >= 1920 - 400 && ly >= 1080 - 150) {
-            x = lx - 160 - 12
+            x = lx - 250 - 12
             y = ly - 150 - 22
         } else if (lx < 1920 - 400 && ly >= 1080 - 150) {
             x = lx + 12
-            y = ly - 150
+            y = ly - 50
         } else {
-            x = lx * 1 ;
-            y = ly * 1 + 10
+            x = lx * 1 + 12;
+            y = ly * 1 + 22
         }
         $('.dropname').text(name)
         $('.dropid').text(id)

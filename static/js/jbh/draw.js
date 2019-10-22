@@ -260,7 +260,7 @@ var drawFunc = {
                 y = ly - 150 - 22
             } else if (lx < 1920 - 400 && ly >= 1080 - 150) {
                 x = lx + 12
-                y = ly - 150
+                y = ly - 20
             } else {
                 x = lx * 1 ;
                 y = ly * 1 + 10
