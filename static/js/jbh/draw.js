@@ -77,7 +77,6 @@ var drawFunc = {
             },
             z: 999
         })
-        g.add(line)
         //zr.add(line)
         var point = new zrender.Image({
             z: 999,
@@ -125,41 +124,35 @@ var drawFunc = {
             },
             onmouseup: function (e) {
                 $('.swiper-container').show()
-                g.childAt(index).show()
-                g.childAt(index).attr({
-                    shape: {
-                        x1: e.target.position[0] * 1,
-                        y1: e.target.position[1] * 1,
-                        cpx1: _this.computeBC(e.target.position[0] * 1 + 12, e.target.position[1] * 1 + 22)[0],
-                        cpy1: _this.computeBC(e.target.position[1] * 1 + 12, e.target.position[1] * 1 + 22)[1],
-                    }
-                })
-                // _this.textGroup.childAt(index).attr({
-                //     position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                // })
             },
             ondragend: function (e) {
                 $('.swiper-container').show()
-                g.childAt(index).show()
-                g.childAt(index).attr({
-                    shape: {
-                        x1: e.target.position[0] * 1 + 12,
-                        y1: e.target.position[1] * 1 + 22,
-                        cpx1: _this.computeBC(e.target.position[0] * 1 + 12, e.target.position[1] * 1 + 22)[0],
-                        cpy1: _this.computeBC(e.target.position[1] * 1 + 12, e.target.position[1] * 1 + 22)[1],
-                    }
-                })
-                // _this.textGroup.childAt(index).attr({
-                //     position: [e.target.position[0] * 1 + 25, e.target.position[1]]
-                // })
             },
-            ondrag: function () {
+            ondrag: function (e) {
                 $('.droplayer').hide()
                 $('.swiper-container').hide()
+                if(e.target.position[0]<=0){
+                    this.attr({
+                        position: [0, e.target.position[1] * 1],
+                    }) 
+                }
+                if(e.target.position[0]>=1870){
+                    this.attr({
+                        position: [1870, e.target.position[1] * 1],
+                    })
+                }
+                if(e.target.position[1]>=1040){
+                    this.attr({
+                        position: [e.target.position[0], 1040],
+                    })
+                }
+                if(e.target.position[1]<=0){
+                    this.attr({
+                        position: [e.target.position[0], 0],
+                    })
+                }
             },
             onmousedown: function () {
-                //$('.swiper-container').hide()
-                g.childAt(index).hide()
             },
             onclick: function (e) {
                 clickFlag = true
@@ -312,11 +305,6 @@ var drawFunc = {
         this.layerState = true
         if(index){
             $('.layerMask').click(function () {
-                g.childAt(index).attr({
-                    style: {
-                        image: '../../static/images/jbh/red.png',
-                    } 
-                })
                 $('.layerMask').fadeOut(200)
             })
         }
@@ -431,7 +419,6 @@ var drawFunc = {
             .start();
     },
     init: function (list) {
-        g.removeAll()
         this.swiperGroup.removeAll()
         zr.clear()
         //this.createDashedLine()

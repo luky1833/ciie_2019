@@ -80,7 +80,6 @@ var drawFunc = {
                 last = 0.001
             }
         }, speed)
-        g.add(line)
         //zr.add(line)
         line.animate('style', true)
             .when(1000, {
@@ -130,13 +129,6 @@ var drawFunc = {
                 }
             },
             onmouseup: function (e) {
-                g.childAt(index).show()
-                g.childAt(index).attr({
-                    shape: {
-                        x1: e.target.position[0] * 1 + 12,
-                        y1: e.target.position[1] * 1 + 22
-                    }
-                })
                 $('input[name="x"]').val(e.target.position[0])
                 $('input[name="y"]').val(e.target.position[1])
                 var site = [e.target.position[0], e.target.position[1]].join(',')
@@ -144,16 +136,8 @@ var drawFunc = {
             },
             onmousedown: function () {
                 isDrag = true
-                g.childAt(index).hide()
             },
             ondragend: function (e) {
-                g.childAt(index).show()
-                g.childAt(index).attr({
-                    shape: {
-                        x1: e.target.position[0] * 1 + 12,
-                        y1: e.target.position[1] * 1 + 22
-                    }
-                })
                 $('input[name="x"]').val(e.target.position[0])
                 $('input[name="y"]').val(e.target.position[1])
                 var site = [e.target.position[0], e.target.position[1]].join(',')
@@ -169,8 +153,28 @@ var drawFunc = {
                     })
                 }
             },
-            ondrag: function () {
+            ondrag: function (e) {
                 $('.droplayer').hide()
+                if(e.target.position[0]<=0){
+                    this.attr({
+                        position: [0, e.target.position[1] * 1],
+                    }) 
+                }
+                if(e.target.position[0]>=1870){
+                    this.attr({
+                        position: [1870, e.target.position[1] * 1],
+                    })
+                }
+                if(e.target.position[1]>=1040){
+                    this.attr({
+                        position: [e.target.position[0], 1040],
+                    })
+                }
+                if(e.target.position[1]<=0){
+                    this.attr({
+                        position: [e.target.position[0], 0],
+                    })
+                }
             },
             onclick: function (e) {
                 clickFlag = true
@@ -386,7 +390,7 @@ var drawFunc = {
             drop_name: "newPoint",
             drop_radiation_speed: 0,
             id: null,
-            site: "200,200",
+            site: "0,200",
             state: "1",
         }
         $('.box').show()
@@ -424,7 +428,6 @@ var drawFunc = {
 },
     init: function (list) {
         var _this = this
-        g.removeAll()
         this.swiperGroup.removeAll()
         zr.clear()
         this.createDropLayer()
