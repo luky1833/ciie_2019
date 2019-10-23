@@ -97,19 +97,19 @@ var drawFunc = {
                 width: 20,
                 height: 18,
             },
-            onmouseover: function (e) {
-                _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
-                this.attr({
-                    position: [e.target.position[0] * 1-12, e.target.position[1] * 1-12],
-                    scale: [1, 1],
-                    style: {
-                        image: '../../static/images/jbh/' + color + '_active.png',
-                        width: 35,
-                        height: 34,
-                    },
-                    z:10
-                })
-            },
+            // onmouseover: function (e) {
+            //     _this.computeDropLayer([e.target.position[0] ,e.target.position[1]],name,ID)
+            //     this.attr({
+            //         position: [e.target.position[0] * 1-12, e.target.position[1] * 1-12],
+            //         scale: [1, 1],
+            //         style: {
+            //             image: '../../static/images/jbh/' + color + '_active.png',
+            //             width: 20,
+            //             height: 18,
+            //         },
+            //         z:10
+            //     })
+            // },
             onmouseout: function (e) {
                 $('.droplayer').hide()
                 if(clickFlag){
@@ -119,7 +119,7 @@ var drawFunc = {
                     clickFlag = false
                 }else{
                     this.attr({
-                        position: [e.target.position[0] * 1+12, e.target.position[1] * 1+12],
+                        position: [e.target.position[0] * 1, e.target.position[1] * 1],
                         scale: [1, 1],
                         style: {
                             image: '../../static/images/jbh/' + color + '.png',
@@ -191,9 +191,9 @@ var drawFunc = {
                     position: [e.target.position[0] * 1, e.target.position[1] * 1],
                     scale: [1, 1],
                     style: {
-                        image: '../../static/images/jbh/' + color + '_active.png',
-                        width: 35,
-                        height: 34,
+                        image: '../../static/images/jbh/' + color + '.png',
+                        width: 20,
+                        height: 18,
                     }
                 })
 
